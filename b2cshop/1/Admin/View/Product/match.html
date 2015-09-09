@@ -1,0 +1,143 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Product|match">
+<include file="Sider/product_left" />
+<div class="col-md-10 row">
+
+    <form style="margin-bottom: 10px" class="form-inline" role="form" action="__APP__/Admin/Product/match.html">
+
+        <div class="form-group">
+
+            <div class="input-group">  排序：
+
+            </div>
+
+            <div class="input-group">
+                <ul class="list-inline ul_btn" style="margin-bottom: 0;margin-right: 10px;">
+                    <li data-value="create_time" class="btn btn-default">上架时间</li>
+                    <li data-value="visit_times" class="btn btn-default ">人气</li>
+                    <input class="ul_btn_value" type="hidden" name="orderType" value="{$orderType}">
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                目录：
+            </div>
+            <div class="input-group">
+                <select name="classId" id="all_class"  class="long_select" >
+                    <option value="">所有</option>
+                    <volist name="classList" id="cl">
+                        <if condition="$cl.id eq $classId">
+                            <option selected="selected" value="{$cl.id}">{$cl.title}</option>
+                            <else />
+                            <option value="{$cl.id}">{$cl.title}</option>
+                        </if>
+                    </volist>
+                </select>
+                <script>
+                    $('#all_class').select2({});
+                </script>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" type="text" value="{$query}" name="query" placeholder="请输入关键词搜索">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn btn-info">查询</button>
+            </div>
+        </div>
+
+        <a class="btn btn-primary" style="margin-left: 20px" href="{:U('Product/addMatch')}">+添加搭配</a>
+
+    </form>
+
+    <div class=" panel panel-info">
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+                <th><input type="checkbox" id="check_all"></th>
+                <th  >id</th>
+                <th  >名称</th>
+                <th >人气</th>
+                <th>状态</th>
+                <th  >上架时间</th>
+                <th  >操作</th>
+
+            </tr>
+            <volist name="productList" id="pl">
+                <tr data-id="{$pl.id}">
+                    <td><input type="checkbox" data-id="{$pl.id}" class="checkbox"></td>
+                    <td>{$pl.id}</td>
+                    <td>{$pl.title}</td>
+                    <td>{$pl.visit_times}</td>
+                    <if condition="$pl.status eq 0">
+                        <td>下架</td>
+                        <else/>
+                        <td>上架</td>
+                    </if>
+                    <td>{$pl.create_time}</td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this,'__ROOT__/Admin/Product/deleteThis/?module=1')"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+                        <a class="btn-link btn-warning" href="{:U('Product/modMatch')}?id={$pl.id}"><button type="button" class="btn btn-xs btn-warning ">修改</button></a>
+                        <a class="btn-link btn-primary" href="{:U('Product/matchInfo')}?id={$pl.id}&type=disabled"><button type="button" class="btn btn-xs btn-warning ">查看</button></a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+        <div style="width: 190px;margin: 20px auto" >
+            <label class="show_text">选中项：</label>
+            <select id="batch_type" class="mul-op ">
+                <option value="delete">删除</option>
+                <option value="shangjia">上架</option>
+                <option value="xiajia">下架</option>
+            </select>
+            <a class="  btn btn-primary" id="ok_btn">确定</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="text-center">
+            <ul class="pagination">
+                {$showList}
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    $('#check_all').click(function(){
+        if(this.checked){
+            $('.checkbox').attr('checked','checked');
+        }else{
+            $('.checkbox').removeAttr('checked');
+        }
+    });
+    $('#ok_btn').on('click',function(){
+        var dom = $('.checkbox[checked]');
+        var data = [];
+        dom.each(function(index,obj){
+            data[index] = {};
+            data[index].id = $(obj).attr('data-id');
+        });
+        var type = $('#batch_type').val();
+        data = JSON.stringify(data);
+        $.ajax({
+            url:'__APP__/Admin/Product/batchDeal.html',
+            data:{data:data,type:type,table:'mz_match'},
+            type:'post',
+            success:function(data){
+                if(data == "success"){
+                    history.go(0);
+                }else{
+                    alert('操作失败:::'+data)
+                }
+            }
+        })
+    })
+</script>
+<include file="Footer/footer" />

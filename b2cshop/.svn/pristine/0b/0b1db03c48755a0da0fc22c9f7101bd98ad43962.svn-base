@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="utf-8">
+<!--    <if condition="( $site['viewport'] neq 0 )" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">&lt;!&ndash;响应式网页&ndash;&gt;
+    </if>-->
+    <title>{$site['content']}</title>
+    <meta name="keywords" content="{$site['keywords']}">
+    <meta name="description" content="{$site['desc']}">
+    <link rel="stylesheet" href="__APP__/Common/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="__APP__/Common/css/index.css" >
+    <script src="http://lib.sinaapp.com/js/jquery/1.10.1/jquery-1.10.1.min.js" ></script>
+</head>
+<style>
+    .container{
+        width: 1200px!important;
+    }
+</style>
+<body>
+    <div class="container user_header">
+        <ul >
+            <li>您好</li>&nbsp;|
+            <empty name="username">
+                <li><a href="/Home/Login/index.html">[请登录]</a><a href="/Home/Login/register.html">[免费注册]</a></li>&nbsp;|
+                <else />
+                <li>{$username}</li>&nbsp;|
+            </empty>
+            <li>关于我们</li>|
+            <li>联系我们</li>
+            <notempty name="username">&nbsp;|
+                <li id="user_center_btn">
+                    <span class="user_center m_font" style="padding: 0 15px 0 5px;">个人中心</span>
+                    <div class="user_dropdown " style="display: none">
+                        <style>
+                            .user_dropdown{
+                                width: 73px;
+                                border: 1px solid #000000;
+                                position: absolute;
+                                left:-6px;
+                                background:#fff;
+                                z-index:2
+                            }
+                            .user_dropdown a{
+                                color: #777777;
+                                display: block;
+                                font-size: 12px;
+                                font-weight: lighter;
+                                text-align: center;
+                                padding: 2px;
+                            }
+                            .user_dropdown a:hover{
+                                color: #ffffff;
+                                background-color: #e6007e
+                            }
+                        </style>
+                        <script>
+                            $('#user_center_btn').mouseover(function(){
+                                $(this).find('.user_dropdown').show();
+                            });
+                            $('#user_center_btn').mouseout(function(){
+                                $(this).find('.user_dropdown').hide();
+                            })
+                        </script>
+                        <a href="__APP__/Home/User/index.html">我的订单</a>
+                        <a href="__APP__/Home/User/yuyue.html">我的预约</a>
+                        <a href="__APP__/Home/Cart/index.html">购物车</a>
+                        <a  href="__APP__/Home/User/collect.html">赞过的商品</a>
+                        <a  href="__APP__/Home/User/myInfo.html">设置</a>
+                        <a href="__APP__/Home/User/logout.html">退出</a>
+                    </div>
+                </li>
+            </notempty>
+        </ul>
+    </div>
+    <div class="container b1_header">
+        <div class="b1_logo">
+            <a href="__APP__/"><img src="__APP__/Common/img/logo.png" alt="b1queen模范行装"></a>
+        </div>
+        <div class="header-cart">
+            <div class="cartIcon">
+                <span class="cartItemNum m_back">{$cartnum}</span>
+            </div>
+            <a class="" href="__APP__/Home/Cart/index.html">去购物车结算></a>
+        </div>
+        <form class="b1_search" method="get" action="/Home/Index/search.html">
+            <input type="text" name="search">
+            <button type="submit" class="search_btn"></button>
+        </form>
+
+    </div>
+
+
+    <include file="Header/nav" />

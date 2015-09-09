@@ -1,0 +1,57 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+        <body data-id="User|index">
+        <include file="Sider/user_left" />
+            <div class="col-md-10 row">
+
+                <form style="margin-bottom: 10px" class="form-inline" role="form" action="./">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="query" placeholder="{$query}">
+                        </div>
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-info">搜索</button>
+                        </div>
+                        <a class="btn btn-primary" style="margin-left: 20px" href="{:U('User/addUser')}">+添加用户</a>
+
+                    </div>
+                </form>
+
+                <div class=" panel panel-info">
+                    <table class="table  table-bordered ">
+                        <tr class=" panel-heading">
+                            <th class="col-md-1">id</th>
+                            <th class="col-md-2">用户名</th>
+                            <th class="col-md-2">昵称</th>
+                            <th class="col-md-2">类型(1:管理员;0:普通用户)</th>
+                            <th class="col-md-1">登录次数</th>
+                            <th class="col-md-2">上次登录时间</th>
+                            <th class="col-md-2">操作</th>
+                        </tr>
+                        <volist name="userList" id="ul">
+                            <tr data-id="{$ul.id}" >
+                                <td>{$ul.id}</td>
+                                <td>{$ul.username}</td>
+                                <td>{$ul.nick_name}</td>
+                                <td>{$ul.type}</td>
+                                <td>{$ul.visit_times}</td>
+                                <td>{$ul.last_time}</td>
+                                <td>
+                                    <a class="btn-link btn-danger" onclick="deleteNode(this)" href="#" ><button type="button" class="btn btn-xs btn-danger">删除用户</button></a>
+                                    <a class="btn-link btn-warning" href="{:U('User/modUser')}?id={$ul.id}"><button type="button" class="btn btn-xs btn-info ">查看</button></a>
+                                </td>
+                            </tr>
+                        </volist>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <ul class="pagination">
+                            {$showList}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+<include file="Footer/footer" />

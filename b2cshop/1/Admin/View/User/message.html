@@ -1,0 +1,97 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<!------------ueditor---------------------->
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<body data-id="User|message">
+<include file="Sider/user_left" />
+<div class="row col-md-10 ">
+    <ul class="nav nav-tabs tab" role="tablist">
+        <li class="active"><a href="#mailtab" role="tab" data-toggle="tab">发送邮件</a> </li>
+        <li  ><a href="#messagetab" role="tab" data-toggle="tab">发送短信</a> </li>
+    </ul>
+    <div class="tab-content margin-top">
+        <div class="tab-pane fade  active in" id="mailtab">
+               <!-- <div class="panel-heading ">
+                    <h2 class="panel-title">发送邮件</h2>
+                </div>-->
+                <!--表单-->
+                <form  class=" form-horizontal" id="mailForm" method="post" action="./messageForm" role="form" >
+
+                    <div class="form-group">
+                       <label for="title" class="col-sm-1 control-label"> <span class="red">*</span>邮件标题</label>
+                        <div class="col-sm-4">
+                           <input type="text" name="title" id="title" class=" form-control" placeholder="{$mail.title}" data-check="['^[\\S]+$','此项必填']" value="{$mail.title}" />
+                        </div>
+                        <label  for="mailto"  class="col-sm-1  control-label"> <span class="red">*</span>收件人:</label>
+                        <div class="col-sm-4">
+                            <select id="mailto" name="mailto" class=" form-control">
+                                <option value="all">所有用户</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"><span class="red">(*)</span> 抄送</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="title" id='title' placeholder="{$product.title}" value="{$product.title}" />
+                        </div>
+                    </div>  -->
+
+                    <div class="form-group ">
+
+                        <div class="content ">
+                            <script id="editor" type="text/plain" class="col-md-11 " style="height:500px;margin-left:10px;"></script>
+                            <input type="hidden" id="info" name="content"  value=""/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group text-center ">
+                        <a  id='sendEmail' class="btn btn-primary text-center" >发送</a>
+                        <a  href="./" class="btn text-center " style="font-size: 12px" >取消</a>
+                    </div>
+
+                </form>
+
+        </div>
+        <div class="tab-pane fade" id="messagetab">
+            <div class="text-danger">发送短信模块</div>
+        </div>
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+        UE.getEditor('editor');//默认加载
+
+        $('#sendEmail').click(function(){
+
+            var form = new CheckForm();
+            if(!form.getResult()||!UE.getEditor('editor').getContent()){
+                alert('填写错误');
+                return false;
+            }
+
+            $('#sendEmail').text('发送中...');
+
+            $('#mailForm').ajaxSubmit({
+                success:function(data){
+                    if(data=="success"){
+                        alert("发送成功")
+                    }else{
+                        alert('发送失败:'+data)
+                    }
+                }
+            });
+        });
+
+    });
+
+</script>

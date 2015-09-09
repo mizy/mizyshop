@@ -1,0 +1,96 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+<style>
+    #admin_footer{
+        position: relative;
+        margin-top:20px;
+    }
+</style>
+<body data-id="Designer|addFenglei">
+<include file="Sider/designer_left" />
+
+<div class="col-md-10 row">
+
+
+    <form role="form" class="col-md-11 form-horizontal" action="/Admin/Designer/addFengleiForm" method="post" id="addFengleiForm" >
+
+        <div class="tab-content margin-top row">
+
+
+                <div class="form-group">
+                    <label  class="text-info  col-sm-2 control-label"><span class="red">*</span> 添加服务</label>
+                    <div class="col-sm-4" >
+                        <div class="col-sm-5" data-dom="{$fuwu.title}">
+                            <a class="add_size_btn">继续添加</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <a  id="add_btn" class="col-md-4 col-md-offset-4 btn btn-primary">添加</a>
+        </div>
+    </form>
+
+</div>
+</body>
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+
+        //添加服务函数
+        var dom,size, x,html;
+        $('[data-dom]').each(function(index,obj){
+            html = '';
+            dom = $(obj);
+            size = dom.attr('data-dom');
+            size = size.split('_');
+            for( x in size){
+                html +='<input class="form-control size_input" type="text"  value="'+size[x]+'" />';
+            }
+            $(obj).prepend(html);
+        });
+        $(document).on('click','a.add_size_btn',function(){
+            $(this).before('<input class="form-control size_input" type="text"  placeholder="" value="" />');
+        });
+
+        //点击提交
+        $("#add_btn").click(function(){
+            //服务item
+            var fuwuStr='';
+            $('.size_input').each(function(index,obj){
+                var dom = $(obj);
+                if(index==0){
+                    fuwuStr = dom.val();
+                }else{
+                    fuwuStr +='_'+ dom.val();
+                }
+
+            });
+
+            $('#addFengleiForm').ajaxSubmit({
+                data:{ fuwuStr:fuwuStr},
+                success:function(data){
+                    if(data=="success"){
+                        $('#add_btn').text('保存成功，即将返回');
+                        setTimeout(function(){
+                            window.location.href = Location.prototype.href = 0;
+
+                        },1000)
+                    }else{
+                        alert("保存失败:"+data)
+                    }
+
+                }
+            })
+        });
+    });
+
+</script>
+<include file="Footer/footer" />

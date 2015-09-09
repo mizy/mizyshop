@@ -1,0 +1,97 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Order|index">
+<include file="Sider/order_left" />
+<div class="row col-md-10">
+    <div class="panel panel-info padding-0">
+        <div class="panel-heading">
+            <div class="panel-title">修改订单信息</div>
+        </div>
+
+        <div class="panel-body">
+            <form role="form" class="col-md-11 form-horizontal" action="/Home/Admin/Order/modOrderForm" method="post" id="modClassForm" >
+                <input type="hidden" name="id" value="{$order.id}">
+
+                <div class="form-group">
+                    <label for="fatherClass"  class="text-info col-sm-2 control-label"> 订单id</label>
+                    <div class="col-sm-4">
+                        <input type="text" disabled="disabled" value="{$order.order_id}"  class="form-control" id="fatherClass" />
+                    </div>
+                    <label for="fatherClass"  class="text-info col-sm-2 control-label"> 订单状态</label>
+                    <div class="col-sm-4">
+                        <select name="status" class="form-control">
+                            <option value="0">未付款</option>
+                            <option value="1">已付款，未发货</option>
+                            <option value="2">已发货</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fatherClass"  class="text-info col-sm-2 control-label"> 订单时间</label>
+                    <div class="col-sm-4">
+                        <input type="text" disabled="disabled" value="{$order.order_time}" class="form-control" id="fatherClass" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc"  class="text-info  col-sm-2 control-label"><span class="red">*</span>用户id</label>
+                    <div class="col-sm-4">
+                     <input type="text"  class="form-control" value="{$order.user}"  name="user"  id="desc" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc"  class="text-info  col-sm-2 control-label"><span class="red">*</span> 地址</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control col-sm-10" name="address_id">{$order.address_id}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc"  class="text-info  col-sm-2 control-label"><span class="red">*</span> 总价</label>
+                    <div class="col-sm-10">
+                        <input type="text"  class="form-control" value="{$order.total_price}" name="total_price"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alias"  class="text-info  col-sm-2 control-label"><span class="red">*</span>备注</label>
+                    <div class="col-sm-10">
+                       <textarea id="alias"  class="form-control col-sm-10" name="beizhu">{$order.beizhu}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alias"  class="text-info  col-sm-2 control-label"><span class="red">*</span>快递公司</label>
+                    <div class="col-sm-10">
+                        <textarea id="alias"  class="form-control col-sm-2" name="post_name">{$order.post_name}</textarea>
+                    </div>
+                    <label for="alias"  class="text-info  col-sm-2 control-label"><span class="red">*</span>运单号</label>
+                    <div class="col-sm-10">
+                       <textarea id="alias"  class="form-control col-sm-6" name="billNo">{$order.billNo}</textarea>
+                    </div>
+                </div>
+
+
+                <a id="save_btn" class="col-md-4 col-md-offset-4 btn btn-primary">确定</a>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    $('#modOrderForm').ajaxSubmit({
+        success:function(data){
+            if(data=='success'){
+                $('#save_btn').text('保存成功');
+                setTimeout(function(){
+                    location.href="/Admin/Order/index.html";
+                })
+            }
+        }
+    })
+</script>
+<include file="Footer/footer" />

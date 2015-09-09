@@ -1,0 +1,4 @@
+name: b2cshop
+version: 1
+handle:
+- rewrite:  if ( !is_dir() && !is_file() && path ~ "^(.*)$" ) goto "/"

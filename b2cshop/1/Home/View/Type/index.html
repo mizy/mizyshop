@@ -1,0 +1,21 @@
+<include file="Header/header" />
+
+<d
+<div class="content">
+	<ul class="job_list">
+		<volist name="job_list" id="jo">
+			<li >
+				<div class="job_list">
+					<span class="job_name"><a href="__MODULE__/Job/?id={$jo['job_id']}">{$jo['job_name']}</a></span>
+					
+					<span class="job_de">{$jo['job_info']}</span>
+					<span class="viewed">访问{$jo['visit_times']}次</span>
+					<a class="more" href="__MODULE__/Job/?id={$jo['job_id']}">详情</a>
+
+				</div>
+			</li>
+		</volist>
+	</ul>
+<div>
+<div>{$showList}</div>
+<include file="Footer/footer" />

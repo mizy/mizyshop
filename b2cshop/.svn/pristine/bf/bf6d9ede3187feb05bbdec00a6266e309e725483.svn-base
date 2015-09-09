@@ -1,0 +1,14 @@
+<div class="col-md-2 ">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span class="panel-heading">管理</span>
+        </div>
+
+        <div class="panel-body">
+            <ul class=" nav   nav-pills nav-stacked">
+                <li   id="index"  ><a href="{:U('News/index')}">管理新闻</a></li>
+                <li   id="addNews"> <a href="{:U('News/addNews')}">添加新闻</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

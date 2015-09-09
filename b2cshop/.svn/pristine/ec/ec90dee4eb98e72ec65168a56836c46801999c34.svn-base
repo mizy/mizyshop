@@ -1,0 +1,101 @@
+<include file='Header/header' />
+ <!------主页面------>
+<div class="container b1_brand " >
+ 您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">造型师</a>
+
+</div>
+<div class="container list_can ">
+    <!--左边-->
+    <include file='DesignerInfo/left' />
+
+    <script>
+        $(document).ready(function(){
+            $('#{$yuyue}').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <div class="user_order_can">
+             <div class="user_order">
+                <table class="user_order_table">
+                    <thead>
+                    <th class="col-md-4">地址</th>
+                    <th class="col-md-2" style="text-align: left">预约信息</th>
+                    <th class="col-md-1">时长</th>
+                    <th class="col-md-1">单价</th>
+                    <th class="col-md-2">总计</th>
+                    <th class="col-md-2">状态</th>
+                    </thead>
+                    <volist name="orderList" id="oL" key="oLi">
+                        <tbody style="display: block;height: 0;width: 100%;border: 0"></tbody>
+                        <tbody data-order="{$oL.id}">
+                        <tr class="orderItem_header">
+                            <td colspan="6" style="text-align: left;padding: 5px;">
+                                <p>{$oL.order_time}
+                                    &nbsp;&nbsp;订单号:{$oL.order_id} </p>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td class="user_item">
+                                <p>{$oL.address_id} </p>
+                            </td>
+                            <td class=" user_item_info" style="text-align: left">
+
+                                    <p>服务:{$oL.fuwu}</p>
+
+                            </td>
+                            <td class="user_num">
+                                <p>{$oL.num}</p>
+                            </td>
+                            <td class="user_price">
+                                <p>{$oL['designer']['price']}</p>
+                            </td>
+                             <td class="user_order_totalPrice"  >
+
+                                <p>{$oL.total_price}</p>
+                            </td>
+                            <td class="user_order_status"  >
+                                <if condition="$oL.status eq 0">
+                                    <a href="/Home/Cart/pay.html?id={$oL.id}" class="m_font">未支付</a>
+                                    <elseif condition="$oL.status eq 1"/>
+                                    <p>支付成功,等待服务</p>
+                                    <button data-id="{$oL.id}" class="fuwu_down">服务完成</button>
+                                    <elseif condition="$oL.status eq 2" />
+                                    <p>服务已完成</p>
+                                     <else/>
+                                    <p>交易成功</p>
+                                 </if>
+
+                            </td>
+                         </tr>
+                        </tbody>
+                    </volist>
+                </table>
+                <div class="page">
+                    <div class="pagination">{$showList}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.fuwu_down').click(function(){
+        var _self = this;
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url:"/Home/DesignerInfo/fuwuDown.html?id="+id,
+            success:function(data){
+                if(data=='success'){
+                    $(_self).text('已服务');
+                    setTimeout(function(){
+                       history.go(0);
+                    },1000)
+                }
+            }
+        })
+    })
+</script>
+
+<include file='Footer/footer' />

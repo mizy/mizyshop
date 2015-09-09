@@ -1,0 +1,101 @@
+.cart_table{
+    border: 1px solid #cccccc;
+
+    margin: 0 auto;
+    width: 100%;
+}
+.cart_table td {
+    vertical-align: top;
+    border-bottom: 1px solid #efefef;
+    padding: 16px 0;
+    line-height: 24px;
+}
+.cart_table th {
+    border-top: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+    padding: 15px 0;
+    font-weight: 400;
+    text-align: center;
+}
+.cart_alcenter {
+    text-align: center;
+}
+.cart_table thead{
+    border-bottom: 1px solid #cccccc;
+}
+td.cart_table_goods_wrap{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.cart_goods_img{
+    float: left;
+}
+.cart_goods_img img {
+    display: block;
+    border: 1px solid #ccc;
+}
+.cart_goods_t{
+    padding-left: 20px;
+}
+.cart_goods_t {
+    display: block;
+    margin: 0 20px 0 90px;
+    line-height: 20px;
+    font-size: 14px;
+    overflow: hidden;
+}
+.cart_num_input{
+    width: 40px;
+    text-align: center;
+}
+.cart_table_goods_wrap{
+    padding-left: 5px;
+}
+.pay_button{
+    margin-top: 20px;
+}
+.cart_header{
+    padding-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "microsoft yahei";
+    border-bottom: 2px #000000 solid ;
+}
+.cart_can_header{
+    padding:  10px 0;
+    display: block;
+}
+.cart_address{
+    margin-bottom: 20px;
+}
+.cart_can_header{
+
+}
+.cart_addres_value{
+    margin-top: 10px;
+}
+.address_list{
+    padding:20px 100px;
+}
+.address_list input{
+    width: 15px;
+    height: 11px;
+    padding-right: 5px;
+}
+.address_item{
+    padding: 5px 10px;
+    cursor: pointer;
+    margin:3px;
+}
+.address_item span{
+    padding-left: 20px;
+}
+.address_list div.checked{
+    border: 1px solid #e6007e;
+    color: #e6007e;
+}
+.vm{
+    text-align: center;
+    vertical-align: middle;
+}

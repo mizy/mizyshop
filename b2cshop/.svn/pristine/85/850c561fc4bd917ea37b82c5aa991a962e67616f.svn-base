@@ -1,0 +1,42 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Product|brand">
+<include file="Sider/product_left" />
+<div class="row col-md-10 ">
+
+
+    <form style="margin-bottom: 10px" class="form-inline" role="form" action="./">
+        <div class="form-group">
+            <a href="__APP__/Admin/Brand/addBrand.html" class="btn btn-primary">添加品牌</a>
+        </div>
+    </form>
+
+    <div class="panel panel-info" style="font-size: 12px">
+
+        <table class="table  table-bordered ">
+            <tr class=" panel-heading">
+                <th>品牌ID</th>
+                <th>名称</th>
+                <th>商品数</th>
+                <th>排序</th>
+                <th>操作</th>
+            </tr>
+            <volist name="brandList" id="bl">
+                <tr data-id="{$bl.id}" >
+                    <td>{$bl.id}</td>
+                    <td>{$bl.title}</td>
+                    <td>{$bl.num}</td>
+                    <td>{$bl.order}</td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this,'/Admin/Brand/deleteThis')" href="#" ><button type="button" class="btn btn-xs btn-danger">删除品牌</button></a>
+                        <a class="btn-link btn-warning" href="{:U('Brand/modBrand')}?id={$bl.id}"><button type="button" class="btn btn-xs btn-info ">修改</button></a>
+                </td>
+                </tr>
+            </volist>
+
+        </table>
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />

@@ -1,0 +1,35 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Module|index">
+<include file="Sider/module_left" />
+<div class="col-md-10 row">
+    <div class=" panel panel-info">
+
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+                <th >id</th>
+                <th >类型名</th>
+                <th>英文简称</th>
+                <th >属性数目</th>
+                <th>操作</th>
+            </tr>
+            <volist name="moduleList" id="ml">
+                <tr data-id="{$ml.id}">
+                    <td>{$ml.id}</td>
+                    <td>{$ml.title}</td>
+                    <td>{$ml.name}</td>
+                    <td>{$ml.num}</td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this,'{:U('Module/deleteThis')}')"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+                        <a class="btn-link btn-warning" href="{:U('Module/modModule')}?id={$ml.id}"><button type="button" class="btn btn-xs btn-warning ">修改</button></a>
+                        <a class="btn-link btn-default"  href="{:U('Module/getProperty')}?id={$ml.id}"><button type="button" class="btn btn-xs btn-default ">查看属性</button></a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />

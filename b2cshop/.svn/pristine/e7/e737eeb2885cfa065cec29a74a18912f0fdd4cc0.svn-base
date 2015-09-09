@@ -1,0 +1,203 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Class|index">
+<include file="Sider/class_left" />
+<div class="row col-md-10">
+    <div class="panel panel-info padding-0">
+        <div class="panel-heading">
+            <div class="panel-title">添加类录</div>
+        </div>
+
+        <div class="panel-body">
+            <form role="form" class="col-md-11 form-horizontal" action="./modClassForm" method="post" id="modClassForm" >
+
+                <input type="hidden" name="id" value="{$class.id}">
+                <div class="form-group">
+                    <label for="mod_title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 类目名</label>
+                    <div class="col-sm-4">
+                        <input value="{$class.title}" type="text" class="form-control" name="title" id="mod_title" data-check="['^[\\S]*$','类目名必填']" placeholder="">
+                    </div>
+                    <label for="cl_module"  class="text-info col-sm-2 control-label"> 类型</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="module" id="cl_module" >
+                            <if condition="$class['module'] eq 1">
+                                <option value="0" >单品</option>
+                                <option value="1" selected="selected">搭配</option>
+                            <else/>
+                                <option value="0" selected="selected">单品</option>
+                                <option value="1" >搭配</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+
+                <!--上级目录-->
+                <div class="form-group">
+                    <label for="fatherClass"  class="text-info col-sm-2 control-label"> 上级目录</label>
+                    <div class="">
+                        <select class="col-sm-9" name="classId"   id="fatherClass" >
+                            <volist name="classList" id="cl">
+                                <if condition="$cl['id'] eq $class['father']">
+                                    <option value="{$cl.id}" selected="selected">{$cl.title}</option>
+                                <elseif condition="$cl['id'] eq $class['id']" />
+
+                                <else/>
+                                    <option value="{$cl.id}">{$cl.title}</option>
+                                </if>
+                            </volist>
+                        </select>
+                        <script>
+                            $('#fatherClass').select2({});
+                        </script>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="order"  class="text-info  col-sm-2 control-label"><span class="red">*</span> 排序</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{$class.id}" class="form-control" name="order" id="order" data-check="['^[0-9]{1,}$','排序需为数字']"  placeholder="">
+                    </div>
+                    <label for="for_index"  class="text-info  col-sm-2 control-label"><span class="red">*</span>首页推荐</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" value="{$class.hot}" name="hot" id="for_index" data-check="['^[0-9]{1}$','hot需为1或0，1代表推荐，0代表不推荐']"  placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc"  class="text-info  col-sm-2 control-label"><span class="red">*</span>栏目图片</label>
+                    <volist name="imgList" id="imgL">
+                        <div data-id="{$imgL.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                            <img src="{$imgL.url}" class="input_img" />
+                            <input type="text" value="{$imgL.title}"   class="form-control hotImgDesc" >
+                            <a class="img_delete_btn">删除</a>
+                        </div>
+                    </volist>
+                    <a id="add_img" class="col-sm-10 clear col-sm-offset-2">继续添加</a>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc"  class="text-info  col-sm-2 control-label"><span class="red">*</span> 分类描述</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" value="{$class.desc}" class="form-control" name="desc" id="desc"  placeholder="">{$class.desc}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alias"  class="text-info  col-sm-2 control-label"><span class="red">*</span>目录别名</label>
+                    <div class="col-sm-10">
+                        <Input  value="{$class.alias}" class="form-control" name="alias" id="alias"  placeholder="">
+                        <small>类目别名是显示在首页推荐栏目的名称</small>
+                    </div>
+
+                </div>
+
+                <a  id="add_btn" class="col-md-4 col-md-offset-4 btn btn-primary">确定</a>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+        //添加函数
+        $('#add_img').click(function(){
+            $(this).before('<div class="col-sm-10 hotImg clear col-sm-offset-2">'
+                    +                   '<input  type="file" class="form-control file" name="hotImg">'
+                    +                    '<input type="hidden" value="" class="imgValue" name="hotImgValue" >'
+                    +                     '<input type="text" placeholder="描述" class="form-control hotImgDesc" >'
+                    +                    '<a class="del_btn">删除</a>'
+                    +               '</div>')
+
+        });
+
+        //删除
+        $('.img_delete_btn').click(function(){
+           $(this).parent().addClass('hide');
+        });
+        $('.del_btn').click(function(){
+           $(this).parent().remove();
+        });
+
+        //点击上传图片
+        $(document).on('change','input.file',function(){
+            var _self = this;
+            $('#add_img').text('继续添加：上传中。。。');
+            $('#modClassForm').ajaxSubmit({
+                url:'/Admin/Class/ajaxImgUpload',
+                data:{name:'hotImg'},
+                success:function(data){
+                    if(data.status == 'success'){
+                        var img = $(_self).parent().find('.input_img');
+                        if(img.length<1){
+                            $(_self).before('<img src="'+data.url+'" class="input_img" />')
+                        }else{
+                            img[0].src = data.url;
+                        }
+                        $(_self).parent().find('.imgValue').val(data.url);
+
+                        $('#add_img').text('继续添加');
+                    }else{
+                        alert('wrong!'+data);
+                    }
+                }
+            })
+        });
+
+        //表单事件
+        $("#add_btn").click(function(){
+            var imgData = [];//图片数据
+
+            var checkForm = new CheckForm('#modClassForm');
+            if(checkForm.getResult()){
+
+                //新增图片
+                $('.hotImg').each(function(index,obj){
+                    var dom = $(obj);
+                    if(dom.find('.imgValue').val() != ''){
+                        imgData[index] = {};
+                        imgData[index].url = dom.find('.imgValue').val();
+                        imgData[index].title = dom.find('.hotImgDesc').val();
+                    }
+                });
+                imgData = JSON.stringify(imgData);
+
+                //修改图片
+                var imgModInfo = {};
+                $(".modImg").each(function(index,obj){
+                    var dom = $(obj);
+                    imgModInfo[index] = {};
+                    imgModInfo[index].id = dom.attr('data-id');
+                    imgModInfo[index].title =  dom.find('.hotImgDesc').val();
+                    if(!dom.hasClass('hide')){
+                        imgModInfo[index].delete = 'false';
+                    }else{
+                        imgModInfo[index].delete = 'true';
+                    }
+                });
+                imgModInfo = JSON.stringify(imgModInfo);
+
+                $('#add_btn').text('保存中。。。');
+                $('#modClassForm').ajaxSubmit({
+                    data:{imgData:imgData,imgModInfo:imgModInfo},
+                    type:'post',
+                    success:function(data){
+                        if(data=="success"){
+                            $('#add_btn').text('保存成功，即将返回');
+                            setTimeout(function(){
+                                window.location.href = '/Admin/Class/index.html';
+                            },1000)
+                        }else{
+                            alert("保存失败:"+data)
+                        }
+
+                    }
+                })
+            }
+        });
+
+    });
+
+</script>
+<include file="Footer/footer" />

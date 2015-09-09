@@ -1,0 +1,136 @@
+.list_dropdown ul{
+    padding-left: 10px;
+}
+.list_dropdown{
+    margin:10px 0;
+}
+.list_dropdown   a{
+    color: #000000;
+}
+.list_dropdown  a:hover,.list_dropdown  a.active{
+    color: #e6007e;
+}
+.user_tab{
+    height: 60px;
+}
+.user_tab a {
+    font-size:18px;
+    color: #000;
+    padding:18px;
+}
+.user_tab a.current{
+    color: #e6007e;
+    border-bottom: 1px solid #e6007e;
+}
+.user_order_table{
+    clear: both;
+    width: 100%;
+    font-size: 12px;
+}
+.user_order_table thead tr{
+    border: 1px solid #efefef;
+    margin:10px 0;
+    height:40px;
+}
+.user_order_table thead th{
+    text-align: center;
+}
+.orderItem_header{
+    background-color:  #eaf8ff;
+    text-align: left;
+}
+.user_order_table tbody {
+    width: 100%;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+.user_order_table td{
+    text-align: center;
+    vertical-align: top;
+    border-bottom: 1px solid #efefef;
+    padding: 16px 10px;
+    line-height: 24px;
+}
+.user_item .user_item_img{
+    vertical-align: middle;
+    float: left;
+}
+.user_item_title{
+    color: #000000;
+    float: left;
+    padding-left: 20px;
+}
+.user_item img{
+    width: 78px;
+    height: 78px;
+    border: 1px solid #cccccc;
+    padding: 1px;
+}
+.item{
+    border: 1px solid #ffffff;
+}
+
+.item.hover{
+    border: 1px solid #cccccc;
+}
+.itemCan .item{
+    height: auto;
+    padding: 5px 5px;
+    margin:0 2px;
+}
+.item .img{
+    height: 200px;
+    position: relative;
+}
+
+.hover .deleteItem{
+    display: block!important;
+}
+.deleteItem{
+    position: absolute;
+    background-color: #cccccc;
+    color: #ffffff;
+    top:0;
+    right: 0;
+    display: none;
+    width: 15px;
+    height: 15px;
+    line-height: 14px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+.user_header{
+    font-size: 18px;
+ }
+.address_table{
+    margin-top:20px;
+}
+.address_table th{
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    padding: 16px;
+}
+.red{
+    color: red;
+}
+.address_table thead{
+    border: 1px solid #cccccc;
+}
+.address_table tr{
+    border: 1px solid #cccccc;
+}
+.address_table td{
+    text-align: center;
+    vertical-align: middle;
+    height: 50px;
+}
+tr.hover{
+    color: #e6007e;
+   z-index: 10;
+}
+.user_order_totalPrice,.user_order_status{
+    border-left: 1px solid #efefef;
+
+}

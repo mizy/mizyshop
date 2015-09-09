@@ -1,0 +1,9 @@
+<footer id="admin_footer"  >
+    <div class="container text-center">
+            <span  style="opacity: 0.6" class="center-block ">Copyright ©1992-2014 Mizy Corporation, All Rights Reserved</span>
+    </div>
+</footer>
+<script src="__APP__/Common/js/lib/bootstrap.min.js" ></script>
+<script src="__APP__/Common/js/admin.js"></script>
+
+

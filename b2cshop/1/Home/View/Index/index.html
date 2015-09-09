@@ -1,0 +1,130 @@
+<include file='Header/header' />
+<meta property="wb:webmaster" content="ede0f6a54748189d" />
+        <!------主页面------>
+<!--flash table-->
+    <div class="container  flash" style="margin-top: 10px;">
+        <div id="flash_index" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#flash_index" data-slide-to="0" class="active"></li>
+                <li data-target="#flash_index" data-slide-to="1"></li>
+                <li data-target="#flash_index" data-slide-to="2"></li>
+                <li data-target="#flash_index" data-slide-to="3"></li>
+                <li data-target="#flash_index" data-slide-to="4"></li>
+            </ol>
+            <div class="b1_slider_bottom"></div>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <volist name="slider" id="f" >
+                    <if condition="$i eq 1">
+                        <div class="item active">
+                            <a href="{$f['content']}"><img src="{$f['logo']}" class="b1_slider" data-url="{$f['content']}"></a>
+                            <!--<div class="carousel-caption">
+                                <h2>{$f['title']}</h2>
+                                <p>{$f['info']}</p>
+                            </div>-->
+                        </div>
+                    <else  />
+                         <div class="item ">
+                             <a href="{$f['content']}"><img src="{$f['logo']}" class="b1_slider" data-url="{$f['content']}"></a>
+                            <!-- <div class="carousel-caption">
+                                 <h2>{$f['title']}</h2>
+                                 <p>{$f['info']}</p>
+                             </div>-->
+                         </div>
+                    </if>
+                </volist>
+            </div>
+
+
+
+           <!-- &lt;!&ndash; Controls &ndash;&gt;
+            <a class="left carousel-control" href="#flash_index" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#flash_index" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>-->
+        </div>
+    </div>
+
+    <div class="container margin-top b1_can">
+        <div class="can_header"><span>{$classHot2.alias}</span><i class="icon_tuijian"></i><a href="__APP__/Home/List/?id={$classHot2.id}" class="pull-right">更多>>></a></div>
+        <div  class="can_content">
+            <a target="_blank" href="__APP__/Home/List/?id={$classHot2.id}"><img class="index_main_img" src="{$classHot2.url}" alt="{$classHot2.desc}" /></a>
+        </div>
+    </div>
+
+    <div class="container margin-top b1_can">
+        <div class="can_header"><span>新品推荐</span><i class="icon_tuijian"></i></div>
+        <div  class="can_content">
+            <volist name="classHot" id="ch">
+                <div class="col-md-6  can_item " style="height: 500px;" data-id="{$i}">
+                    <div class=" can_itemLeft">
+                        <img class="main_img" src="{$ch['img'][0]['url']}" alt="{$ch['img'][0]['title']}">
+                        <div class="item_info">
+                            <span class="item_info_text">{$ch.alias}</span>
+                            <a href="__APP__/Home/List/?id={$ch.id}">点击进入></a>
+                        </div>
+                    </div>
+                    <div class="can_itemRight ">
+                        <div class="b1_hot1">
+                            <a href="{$ch['img'][1]['title']}" ><img src="{$ch['img'][1]['url']}" alt="{$ch['img'][1]['desc']}" /></a>
+                        </div>
+                        <div class="b1_hot2">
+                            <a href="{$ch['img'][2]['title']}" ><img src="{$ch['img'][2]['url']}" alt="{$ch['img'][2]['desc']}" /></a>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+
+        <!--选择浮窗-->
+     <if condition="$fuchuang eq 1">
+        <div class="fuceng_back">
+            <div class="fuceng">
+                <div class="fuceng_item bandingzhi pull-left ">
+                    <a class="  index_bandingzhi">
+                        <span>半定制搭配</span>
+
+                            <img src="/Common/img/fuchuang1.gif">
+                    </a>
+                </div>
+                <div class="fuceng_item siren pull-right">
+                    <a href="__APP__/Home/Custom/" class="  index_dingzhi">
+                        <span>私人服务预约</span>
+
+                        <img src="__APP__/Common/img/fuchuang2.gif">
+
+                    </a>
+                </div>
+
+              <!--  <span class="index_bandingzhi close_btn">x</span>-->
+            </div>
+        </div>
+     </if>
+
+</body>
+<script>
+    $('.b1_hot1').on('mouseenter',function(){
+        $(this).animate({height:'60%'},500);
+    });
+    $('.b1_hot1').on('mouseleave',function(){
+        $(this).animate({height:'40%'},500);
+    })
+
+    //浮窗
+    $('.index_bandingzhi').click(function(){
+        $('.fuceng_back').hide();
+     })
+
+
+    $('.can_item').each(function(index,obj){
+        if($(this).attr('data-id')%2==0){
+            $(this).addClass('padding-left');
+
+        }
+    });
+</script>
+<include file='Footer/footer' />

@@ -1,0 +1,196 @@
+<include file='Header/header' />
+<link type="text/css" rel="stylesheet" href="__APP__/Common/css/match.css">
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置：<a href="__APP__">首页</a> <volist name="brandHead" id="bh">
+    ><a href="__APP__/Home/List/index.html?id={$bh.id}">{$bh.title}</a>
+</volist>
+</div>
+<div class="container list_can ">
+   <!--左边-->
+    <div class="list_left col-md-2" style="display: none">
+        <div class="list_class">
+
+            <!--销售榜-->
+            <div class="list_left_can">
+                <div class="header">
+                    大家都在看
+                </div>
+                <div class="content">
+                    <div class="soldNO1">
+                        <a href="__APP__/Home/Item/index.html?id={$soldList[0]['id']}">
+                            <img src="{$soldList[0]['img']['url']}" alt="{$soldList[0]['title']}"/>
+                        </a>
+                    </div>
+                    <volist name="soldList" id="sl">
+                        <div class="soldList">
+                            <span class="b1_circle">{$i}</span>
+                            <span class="title">
+                                <a href="__APP__/Home/Item/index.html?id={$sl['id']} ">
+                                    {$sl['title']}
+                                </a>
+                            </span>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+
+            <!--浏览历史-->
+            <div class="list_left_can">
+                <div class="header">
+                    浏览历史
+                </div>
+                <div class="content">
+                    <ul class="historyUl">
+                        <volist name="historyItem" id="hi">
+                            <li>
+                                <img src="{$hi.url}">
+                                <a href="__APP__/Home/Item/index.html?id={$hi.item}">{$hi.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--右边-->
+    <div class="list-right col-md-12 item_right" >
+        <div class="item_photo">
+            <div class="col-md-6  can_item " data-id="{$match.id}">
+                <div class=" col-md-9 itemMainImg">
+                    <img src="{$match['img'][0]['url']}" alt="{$match['img'][0]['title']}">
+                </div>
+                <div class="col-md-3 itemOtherImg">
+                    <volist name="match['img']" id="ii" >
+                        <if condition='$i gt 4'>
+                        <else/>
+                            <div class="itemImgList">
+                                <img src="{$ii.url}" alt="{$ii.title}" />
+                            </div>
+                        </if>
+                    </volist>
+                </div>
+                <div class="itemImg_bar">
+                    <div class="img_bar">
+                        <a class="zan"></a>
+                        <a class="weibo"></a>
+                    </div>
+                    <div class="item_pingjia">
+                        <span>买家评价</span>
+                        <ul>
+                            <if condition="$i gt $pingjia">
+                            <li></li>
+                                <else/>
+                                <li class="on"></li>
+                            </if>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 can_item">
+                <div class="itemDetail">
+                    <span class="item_title"> {$match.title}</span>
+                    <span class="item_price">风格笔记 &nbsp;{$match.desc}</span>
+                    <span class="category_tip">各个单品<i class="icon_bottom"></i></span>
+                </div>
+                <div class="itemCategory">
+                    <volist name="itemList" id="iL">
+                        <div class="can">
+                             <a href="__APP__/Home/Item/index.html?id={$iL.id}"><img src="{$iL.url}" /></a>
+                             <div class="itemDetail">
+                                 <a href="__APP__/Home/Item/index.html?id={$iL.id}" class="item_title">{$iL.title}</a>
+                                 <a>RMB</a><span class="item_price">{$iL.price}</span>
+                                 <span class="item_sold">销量 {$iL.sold_num}</span>
+                             </div>
+                             <div class="match_cart">
+                                 <if condition="$iL.stock_num gt 0">
+                                     <a href="__APP__/Home/Item/index.html?id={$iL.id}" style="display: block" class="b1_s_btn">立即购买</a>
+                                 <else />
+                                     <button class="b1_no_btn">已经售罄</button>
+                                 </if>
+
+                             </div>
+                        </div>
+                     </volist>
+                </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+
+    seajs.use('__APP__/Common/js/tipbox',function(TipBox){
+        //销售榜
+        function cutstr(str,len)
+        {
+            var str_length = 0;
+            var str_len = 0;
+            str_cut = new String();
+            str_len = str.length;
+            for(var i = 0;i<str_len;i++)
+            {
+                a = str.charAt(i);
+                str_length++;
+                if(escape(a).length > 4)
+                {
+                    //中文字符的长度经编码之后大于4
+                    str_length++;
+                }
+                str_cut = str_cut.concat(a);
+                if(str_length>=len)
+                {
+                    str_cut = str_cut.concat("...");
+                    return str_cut;
+                }
+            }
+            //如果给定字符串小于指定长度，则返回源字符串；
+            if(str_length<len){
+                return  str;
+            }
+        }
+        $('div.soldlist .tittle a').each(function(index,obj){
+            if($(obj).width()>140){
+                var text = $(obj).text();
+                $(obj).text(cutstr(text,16));
+            }
+        });
+
+        //hover Item effect
+        $('.itemList .can').mouseover(function(){
+            $(this).addClass('on');
+        }).mouseleave(function(){
+            $(this).removeClass('on');
+        });
+
+
+
+        //点赞
+        $('.zan').click(function(){
+            var tipbox = new TipBox({
+                obj: $(this),
+                str: "+1",
+                endSize:'26',
+                interval:900,
+                color:"#e6007e",
+                callback: function() {
+                    $.ajax({
+                        url:"__APP__/Home/List/addZan.html?id={$id}&match=1"
+                    })
+                }
+            })
+        })
+
+        //图片点击切换
+        $(document).on('click','.item_photo img',function(){
+            var src = $(this)[0].src;
+            $('.itemMainImg').find('img').attr('src',src);
+        })
+
+
+    });
+
+
+</script>
+
+<include file='Footer/footer' />

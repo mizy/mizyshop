@@ -1,0 +1,164 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+<style>
+    #admin_footer{
+        position: relative;
+    }
+
+</style>
+
+<body data-id="Product|changeClass">
+<include file="Sider/product_left" />
+<div class="container margin-top">
+    <button id="addClassButton" class="pull-left btn btn-primary" >添加分类</button>
+    <div class="col-md-9 panel panel-info">
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+                <th class="col-md-1">id</th>
+                <th class="col-md-1">排序</th>
+                <th class="col-md-2">名称</th>
+                <th class="col-md-2">产品数目</th>
+                <th class="col-md-3">上次修改时间</th>
+                <th class="col-md-2">操作</th>
+            </tr>
+            <tr data-id="" style="display: none">
+                <td></td>
+                <td><input type="text" class="order" disabled value="" /></td>
+                <td><input type="text" class="title" disabled value="" /></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a class="btn-link btn-success" onclick="saveClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-danger">保存</button></a>
+                    <a class="btn-link btn-warning" onclick="modClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-danger">修改</button></a>
+                    <a class="btn-link btn-dangerous" onclick="deleteClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+
+                </td>
+            </tr>
+            <volist name="classList" id="cl">
+                <tr data-id="{$cl.id}">
+                    <td>{$cl.id}</td>
+                    <td><input type="text" class="order" disabled value="{$cl.order}" /></td>
+                    <td><input type="text" class="title" disabled value="{$cl.title}" /></td>
+                    <td>{$cl.num}</td>
+                    <td>{$cl.lastTime}</td>
+                    <td>
+                        <a class="btn-link btn-success" onclick="saveClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-success">保存</button></a>
+                        <a class="btn-link btn-warning" onclick="modClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-warning">修改</button></a>
+                        <a class="btn-link btn-dangerous" onclick="deleteClass(this)"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />
+<script src="http://malsup.github.io/jquery.form.js"></script>
+<script>
+    (function(){
+
+        $('#image').change(function(){
+            var div =  $('#product');
+            ajaxUploadImg(div);
+            return false;
+        });
+
+        $('#addClassButton').bind("click",addClass);
+    })();
+
+
+    //add类目
+    function addClass(){
+        var url = "./ajaxAddClass?num=0"
+        $.ajax({
+            url:url,
+            type:"get",
+            dataType:"json",
+            success:function(res){
+                addTr(res)
+            }
+        });
+    }
+
+    function addTr(info){
+
+        //修改tr
+        var tr = $("tr").last().clone();
+        $(tr).attr("data-id",info['id']);
+        $(tr).removeAttr("style");
+        $(tr).find("input").removeAttr("disabled");
+
+        //td赋值
+        var td = $(tr).children("td");
+        $(td[0]).text(info['id']);
+        $(td[3]).text("0");
+        $(td[4]).text(info['lastTime']);
+        $(tr).find("#order").val("0");
+        $(tr).find("#title").val("");
+
+        $("table").append(tr);
+
+    }
+
+    //修改函数
+    function modClass(div){
+        var tr = $(div).parent().parent();
+        tr.find("input").removeAttr("disabled");
+    }
+
+    //保存函数
+    function saveClass(div){
+        var tr = $(div).parent().parent();
+        var id = tr.attr("data-id");
+        var order = tr.find('.order').val();
+        var title = tr.find('.title').val();
+
+        var url="./ajaxChangeClass";
+        $.ajax({
+            url:url,
+            type:"post",
+            data:{id:id,order:order,title:title},
+            success:function(response){
+                if(response!="success"){
+                    alert("保存失败");
+                }else{
+                    tr.find("input").attr("disabled","disabled");
+                }
+            }
+        })
+
+    }
+
+    //删除函数
+    function deleteClass(div){
+
+        if(!confirm("确定删除？")){
+            return false;
+        }
+
+        var tr = $(div).parent().parent();
+        var id = tr.attr("data-id");
+        var url="./ajaxDeleteClass";
+        $.ajax({
+            url:url,
+            type:"post",
+            data:{id:id},
+            success:function(response){
+                if(response!="success"){
+                    alert("删除失败");
+                }else{
+
+                    tr.fadeOut(1200,function(){
+                        tr.remove();
+                    })
+
+                }
+            }
+        })
+    }
+
+
+</script>

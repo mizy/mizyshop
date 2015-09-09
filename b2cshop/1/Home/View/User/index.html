@@ -1,0 +1,135 @@
+<include file='Header/header' />
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">个人中心</a>
+
+</div>
+<div class="container list_can ">
+    <!--左边-->
+    <include file='User/user_left' />
+    <script>
+        $(document).ready(function(){
+            $('#user_index').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <div class="user_order_can">
+            <div class="user_tab" data-value="{$orderType}">
+                <a href="/Home/User/index.html">所有订单</a>
+                <a class="1" href="/Home/User/index.html?status=1">已付款</a>
+                <a  class="0" href="/Home/User/index.html?status=0">未付款</a>
+            </div>
+            <script>
+                (function(){
+                    var orderType = $('.user_tab').attr('data-value');
+                    if(orderType!=''){
+                        $('.user_tab').find('.'+orderType).addClass('current');
+                    }else{
+                        $('.user_tab').find('a:first').addClass('current');
+                    }
+                })();
+            </script>
+            <div class="user_order">
+                <table class="user_order_table">
+                    <thead>
+                        <th class="col-md-4">商品</th>
+                        <th class="col-md-2" style="text-align: left">商品信息</th>
+                        <th class="col-md-1">数量</th>
+                        <th class="col-md-1">单价(元)</th>
+                        <th class="col-md-2">总计(元)</th>
+                        <th class="col-md-2">状态</th>
+                    </thead>
+                    <volist name="orderList" id="oL" key="oLi">
+                    <tbody style="display: block;height: 0;width: 100%;border: 0"></tbody>
+                    <tbody data-order="{$oL.id}">
+                         <tr class="orderItem_header">
+                             <td colspan="6" style="text-align: left;padding: 5px;">
+                                 <p>{$oL.order_time}
+                                     &nbsp;&nbsp;&nbsp;&nbsp;订单号:{$oL.orderid} </p>
+                                  <p>地址：{$oL.address_id}</p>
+                             </td>
+                         </tr>
+                         <volist name="oL['itemList']" id="iL" key="iLL" >
+                             <tr>
+                                 <td class="user_item">
+                                     <a class="user_item_img" href="__APP__/Home/Item/index.html?id={$iL.item}"><img src="{$iL['info']['url']}" alt="{$iL.title}"></a>
+                                     <a href="__APP__/Home/Item/index.html?id={$iL.item}" class="user_item_title">{$iL['info']['title']}</a>
+                                 </td>
+                                 <td class=" user_item_info" style="text-align: left">
+                                     <if condition="$iL['info']['module'] eq 1">
+                                         <p>分类:{$iL.chima}</p>
+                                         <else/>
+                                         <p>尺码:{$iL.chima}</p>
+                                         <p>颜色:{$iL.color}</p>
+                                     </if>
+                                 </td>
+                                 <td class="user_num">
+                                     <p>{$iL.num}</p>
+                                 </td>
+                                 <td class="user_price">
+                                     <p>{$iL.price}</p>
+                                 </td>
+                                 <if condition="$iLL eq 1">
+                                     <td class="user_order_totalPrice" rowspan="{$oL.length}">
+
+                                         <p>{$oL.total_price}</p>
+                                     </td>
+                                     <td class="user_order_status" rowspan="{$oL.length}">
+                                         <if condition="$oL.status eq 0">
+                                             <a href="/Home/Pay/index.html?id={$oL.id}" class="m_font">现在支付</a>
+                                         <elseif condition="$oL.status eq 1"/>
+                                             <p>付款成功,准备发货</p>
+                                         <elseif condition="$oL.status eq 2" />
+                                             <p>已发货</p>
+                                             <p>运单号:<a href="http://www.kiees.cn/deppon.php?wen={$oL.billNo}">{$oL.billNo}</a> </p>
+                                         <else/>
+                                             <p>交易成功</p>
+                                             <p>运单号:<a href="http://www.kiees.cn/deppon.php?wen={$oL.billNo}">{$oL.billNo}</a> </p>
+                                         </if>
+                                     </td>
+                                </if>
+                             </tr>
+
+                         </volist>
+
+                    </tbody>
+                </volist>
+                </table>
+                <div class="page">
+                    <div class="pagination">{$showList}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+(function(){
+    //click效果
+    $(document).on('click','.iconLeftTrim',function(){
+        var grand = $(this).parent().parent();
+        if($(grand).hasClass('active')){
+            $(grand).removeClass('active');
+        }else{
+            $(grand).addClass('active');
+        }
+    });
+
+   //orderType
+    //orderType
+    var orderType = $('.user_tab').attr('data-value');
+    if(orderType==''){
+        $('.user_tab a:first').addClass('current');
+    }else{
+        $('.user_tab').find('.'+orderType).addClass('current');
+    }
+})()
+
+
+
+</script>
+
+
+<include file='Footer/footer' />

@@ -1,0 +1,88 @@
+<include file='Header/header' />
+<!------主页面------>
+<style>
+    #registerForm{
+        padding: 50px 0;;
+    }
+    .red{
+        color: #ff0000;
+    }
+</style>
+<form class="form-horizontal panel-body row col-md-offset-4 col-md-4" role="form" id="registerForm" action="__APP__/Home/Login/registerForm.html" method="post">
+    <div class="form-group">
+        <label for="re_email" class="text-primary col-sm-3 control-label"><span class="red">*</span>邮箱</label>
+        <div class="col-sm-9">
+            <input type="email" class="form-control" name="email" id="re_email" placeholder="邮箱" data-check="['^((([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+))$','邮箱格式输入有误']">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="user_name" class="text-primary col-sm-3 control-label"><span class="red">*</span>用户名</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="user_name" id="user_name" data-check="['^[0-9a-zA-Z_]{4,18}$','昵称不能过长且为字母或数字']" placeholder="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="pwd"  class="text-primary  col-sm-3 control-label"><span class="red">*</span> 密码</label>
+        <div class="col-sm-9">
+            <input type="password" class="form-control" name="password" id="pwd" data-check="['^[a-zA-Z0-9_]{5,19}$','密码需为大小写字母和数字构成,长度需小于19大于6']"  placeholder="">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="pwd2" class="text-primary col-sm-3 control-label"><span class="red">*</span>重新输入</label>
+        <div class="col-sm-9">
+            <input type="password" class="form-control" id="pwd2" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label  class="text-primary col-sm-3 control-label"> 性别</label>
+        <div class="col-sm-9">
+            <label class="radio-inline">
+                <input type="radio" name="sex" checked="checked" value="0"> 男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sex" value="1"> 女
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="phone"  class="text-primary col-sm-3 control-label"> 手机</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" name="phone" id="phone" data-check="['^(([0-9]{11})|([\s]*))$','手机格式输入有误']" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group" id="verifyGroup">
+        <label for="verifyCode"  class="text-primary col-sm-3 control-label"> 验证码</label>
+        <div class="col-sm-5 ">
+            <a href="#"><img class="col-sm-12 "  id="verifyCode" src="__APP__/Home/Login/verify/" /></a>
+            <script>
+                document.getElementById('verifyCode').onclick=function(){
+                    this.src="__APP__/Home/Login/verify/"+"?m="+Math.random();
+                }
+            </script>
+        </div>
+        <div class="col-sm-4 ">
+            <input type="text" class="form-control" name="code" id="code" data-check="['^[a-zA-Z]{4}$','验证码错误']" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" id="registerButton"  class="b1_b_btn col-sm-6 btn-primary">立即注册</button>
+        </div>
+    </div>
+</form>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+    seajs.use("__APP__/Common/js/register.js",function(Register){
+       var register =  new Register({
+            form:'#registerForm'
+        });
+    })
+</script>
+
+<include file='Footer/footer' />

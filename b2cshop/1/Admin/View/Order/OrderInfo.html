@@ -1,0 +1,82 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<link rel="stylesheet" href="/Common/css/user.css" />
+<body data-id="Order|index">
+<include file="Sider/order_left" />
+<div class="col-md-10 row">
+    <div class=" panel panel-info">
+        <table class="table table-bordered">
+            <thead class="text-center panel-heading">
+            <th class="col-md-4">商品</th>
+            <th class="col-md-2" style="text-align: left">商品信息</th>
+            <th class="col-md-1">数量</th>
+            <th class="col-md-1">单价</th>
+            <th class="col-md-2">总计</th>
+            <th class="col-md-2">状态</th>
+            </thead>
+            <tbody data-order="{$order.id}">
+            <tr class="orderItem_header">
+                <td colspan="6" style="text-align: left;padding: 5px;">
+                    <p>{$order.order_time}
+                        &nbsp;&nbsp;订单号:{$order.id} </p>
+                    <p>地址：{$order.address_id}</p>
+                </td>
+            </tr>
+
+            <volist name="itemList" id="iL" key="iLL" >
+                <tr>
+                    <td class="user_item">
+                        <a class="user_item_img" href="__APP__/Home/Item/index.html?id={$iL.item}"><img src="{$iL['info']['url']}" alt="{$iL.title}"></a>
+                        <a href="__APP__/Home/Item/index.html?id={$iL.item}" class="user_item_title">{$iL['info']['title']}</a>
+                    </td>
+                    <td class=" user_item_info" style="text-align: left">
+                        <if condition="$iL['info']['module'] eq 1">
+                            <p>分类:{$iL.chima}</p>
+                            <else/>
+                            <p>尺码:{$iL.chima}</p>
+                            <p>颜色:{$iL.color}</p>
+                        </if>
+                    </td>
+                    <td class="user_num">
+                        <p>{$iL.num}</p>
+                    </td>
+                    <td class="user_price">
+                        <p>{$iL.price}</p>
+                    </td>
+                    <if condition="$iLL eq 1">
+                        <td class="user_order_totalPrice" rowspan="{$oL.length}">
+
+                            <p>{$order.total_price}</p>
+                        </td>
+                        <td class="user_order_status" rowspan="{$oL.length}">
+                            <if condition="$oL.status eq 0">
+                                <a   class="m_font">未支付</a>
+                                <a href="/Admin/Order/modOrder.html?id={$order.id}">编辑</a>
+                                <elseif condition="$oL.status eq 1"/>
+                                <p>已付款&nbsp;<a href="/Admin/Order/modOrder.html?id={$order.id}">现在发货</a></p>
+                                <elseif condition="$oL.status eq 2" />
+                                <p>已发货</p>
+                                <a href="/Admin/Order/modOrder.html?id={$order.id}">编辑</a>
+                                <p>运单号:($order.post_name)<a href="http://www.kiees.cn/deppon.php?wen={$order.billNo}">{$order.billNo}</a> </p>
+                                <else/>
+
+                            </if>
+                        </td>
+                    </if>
+                </tr>
+            </volist>
+
+            </tbody>
+        </table>
+        <!--   <div style="width: 190px;margin: 20px auto" >
+               <label class="show_text">选中项：</label>
+               <select id="batch_type" class="mul-op ">
+                   <option value="delete">删除</option>
+                   <option value="shangjia">发货</option>
+               </select>
+               <a class="  btn btn-primary" id="ok_btn">确定</a>
+           </div>-->
+    </div>
+ </div>
+</body>
+<include file="Footer/footer" />

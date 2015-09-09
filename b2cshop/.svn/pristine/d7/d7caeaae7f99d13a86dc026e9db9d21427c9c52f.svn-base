@@ -1,0 +1,328 @@
+<include file='Header/header' />
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置：<a href="http://b1queen.com">首页</a> <volist name="brandHead" id="bh">
+    ><a href="__APP__/Home/List/index.html?id={$bh.id}">{$bh.title}</a>
+</volist>
+</div>
+
+<div class="container list_can ">
+    <!--左边-->
+    <div class="list_left col-md-2">
+        <div class="list_class">
+
+            <!--销售榜-->
+            <div class="list_left_can">
+                <div class="header">
+                    大家都在看
+                </div>
+                <div class="content">
+                    <div class="soldNO1">
+                        <a href="__APP__/Home/Item/index.html?id={$soldList[0]['id']}">
+                            <img src="{$soldList[0]['img']['url']}" alt="{$soldList[0]['title']}"/>
+                        </a>
+                    </div>
+                    <volist name="soldList" id="sl">
+                        <div class="soldList">
+                            <span class="b1_circle">{$i}</span>
+                            <span class="title">
+                                <a href="__APP__/Home/Item/index.html?id={$sl['id']} ">
+                                    {$sl['title']}
+                                </a>
+                            </span>
+                        </div>
+                    </volist>
+                </div>
+            </div>
+
+            <!--浏览历史-->
+            <div class="list_left_can">
+                <div class="header">
+                    浏览历史
+                </div>
+                <div class="content">
+                    <ul class="historyUl">
+                        <volist name="historyItem" id="hi">
+                            <li>
+                                <img src="{$hi.url}">
+                                <a href="__APP__/Home/Item/index.html?id={$hi.item}">{$hi.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右边-->
+    <div class="list-right col-md-10 item_right" >
+        <div class="item_photo">
+            <div class="col-md-6  can_item " data-id="{$item.id}">
+                <div class=" col-md-9 itemMainImg">
+                    <img src="{$item['img'][0]['url']}" alt="{$item['img'][0]['title']}">
+                </div>
+                <div class="col-md-3 itemOtherImg">
+                        <volist name="item['img']" id="ii" >
+                            <if condition='$i gt 4'>
+                             <else/>
+                                <div class="itemImgList">
+                                     <img src="{$ii.url}" alt="{$ii.title}" />
+                                 </div>
+                            </if>
+                        </volist>
+                </div>
+                <div class="itemImg_bar">
+                    <div class="img_bar">
+                        <a class="zan"></a>
+                        <a  target="_blank" href="http://service.weibo.com/share/share.php?url=http://b1queen.com/Home/Item/index.html?id={$iL.id}&appkey=&title=//@模范行装&pic=&ralateUid= &language=zh_cn" class="weibo"></a>
+                    </div>
+                    <div class="item_pingjia">
+                        <span>买家评价</span>
+                        <ul>
+                            <if condition="$i gt $pingjia">
+                                <li></li>
+                                <else/>
+                                <li class="on"></li>
+                            </if>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 can_item" id="item_can">
+                <div class="itemDetail">
+                    <span class="item_title"> {$item.title}</span>
+                    <span class="item_price">RMB &nbsp;&nbsp;&nbsp;{$item.price}</span>
+                    <span class="category_tip">请选择颜色和尺码<i class="icon_bottom"></i></span>
+                </div>
+                <div class="itemCategory">
+                    <if condition="$item['module'] eq 1">
+                        <div class="can">
+                            <div class="item_chima">
+                                <span class="category_title">分类</span>
+                            </div>
+                            <div class="item_chimaItem choose_chima" data-value="{$item.size}">
+
+                            </div>
+                        </div>
+                    <else/>
+                        <div class="can">
+                            <div class="item_chima">
+                                <span class="category_title">尺码</span>
+                            </div>
+                            <div class="item_chimaItem choose_chima" data-value="{$item.size}">
+
+                            </div>
+                        </div>
+                        <div class="can">
+                            <div class="item_chima">
+                                <span class="category_title">颜色</span>
+                            </div>
+                            <div class="item_chimaItem choose_color">
+                                <volist name="item['color']" id="itc">
+                                    <span data-value="{$itc.title}"><img src="{$itc.url}" alt="{$itc.title}">  </span>
+                                </volist>
+
+                            </div>
+                        </div>
+                    </if>
+                </div>
+                <div class="itemBuy">
+                    <div class="item_buyNum">
+                        <span class="buyNum_title">数量</span>
+                        <div class="buyNum">
+                            <span class="it_left_btn">-</span>
+                            <input class="it_num_value" value="1">
+                            <span class="it_right_btn">+</span>
+                        </div>
+                    </div>
+                    <button class="b1_b_btn buy_button">立即购买</button>
+                    <button class="b1_g_btn buy_cart " >加入购物车</button>
+                    <div class="fgbj_area">
+                        {$item.desc}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+
+    seajs.use('__APP__/Common/js/tipbox',function(TipBox){
+        //销售榜
+        function cutstr(str,len)
+        {
+            var str_length = 0;
+            var str_len = 0;
+            str_cut = new String();
+            str_len = str.length;
+            for(var i = 0;i<str_len;i++)
+            {
+                a = str.charAt(i);
+                str_length++;
+                if(escape(a).length > 4)
+                {
+                    //中文字符的长度经编码之后大于4
+                    str_length++;
+                }
+                str_cut = str_cut.concat(a);
+                if(str_length>=len)
+                {
+                    str_cut = str_cut.concat("...");
+                    return str_cut;
+                }
+            }
+            //如果给定字符串小于指定长度，则返回源字符串；
+            if(str_length<len){
+                return  str;
+            }
+        }
+        $('div.soldlist .tittle a').each(function(index,obj){
+            if($(obj).width()>140){
+                var text = $(obj).text();
+                $(obj).text(cutstr(text,16));
+            }
+        })
+
+        //去除提示
+        $('#item_can .item_chimaItem').click(function(){
+            $('#item_can').removeClass('needInfo');
+        });
+
+        //立即购买事件
+        $('.buy_button').click(function(){
+            //立即购买事件
+            if(ifChoose())ifLogin(buynow);
+        });
+
+        //加入购物车事件
+        $('.buy_cart').click(function(){
+            if(ifChoose())ifLogin(toCart);
+        });
+
+        //是否选择完毕
+        function ifChoose(){
+            var flag=true;
+            $('.item_chimaItem').each(function(index,obj){
+                if(flag&&$(obj).find('.choosed').length<1){
+                    flag=false;
+                    $('#item_can').addClass('needInfo');
+                }
+            });
+            return flag;
+        }
+        //是否登陆
+        function ifLogin(callback){
+            $.ajax({
+                url:'__APP__/Home/Login/isLogin',
+                success:function(data){
+                    if(data=='true'){
+                        callback();
+                    }else{
+                        //没登陆就先登录再回来
+                        location.href='__APP__/Home/Cart/needLogin.html?id={$item["id"]}'
+                    }
+                }
+            })
+        }
+
+        //立即购买
+        function buynow(){
+            //成功则取订单页
+            var chima = $('.choose_chima .choosed').text();
+            var color = $('.choose_color .choosed').attr('data-value');
+            var num = $('.it_num_value').val();
+            var item ='{$item["id"]}';
+            $.ajax({
+                url:'__APP__/Home/Cart/buynow',
+                data:{chima:chima,color:color,num:num,item:item},
+                type:'post',
+                success:function(data){
+                    if(data=='success'){
+                        location.href = '__APP__/Home/Cart/buy'
+                    }
+                }
+            })
+        }
+        //加入购物车
+        function toCart(){
+            //成功则取订单页
+            var chima = $('.choose_chima .choosed').text();
+            var color = $('.choose_color .choosed').attr('data-value');;
+            var num = $('.it_num_value').val();
+            var item ='{$item["id"]}';
+            $('.buy_cart').text('添加中...').addClass('success');
+            $.ajax({
+                url:'__APP__/Home/Cart/toCart',
+                data:{chima:chima,color:color,num:num,item:item},
+                type:'post',
+                success:function(data){
+                    if(data=='success'){
+                        $('.buy_cart').text('添加成功').addClass('success');
+                    }
+                    setTimeout(function(){
+                        $('.buy_cart').text('加入购物车').removeClass('success');
+                    },1500)
+                }
+            })
+        }
+
+        //解析分类
+        $('.item_chimaItem[data-value]').each(function(index,obj){
+            var value = $(this).attr('data-value');
+            var category = value.split('_');
+            var eachValue,html='';
+            for(eachValue in category){
+                html = html+ '<span>'+category[eachValue]+'</span>';
+            }
+            $(this).html(html);
+        });
+
+        //点赞
+        $('.zan').click(function(){
+            var tipbox = new TipBox({
+                obj: $(this),
+                str: "+1",
+                endSize:'26',
+                interval:900,
+                color:"#e6007e",
+                callback: function() {
+                    $.ajax({
+                        url:"__APP__/Home/List/addZan.html?id={$id}&match=0"
+                    })
+                }
+            })
+        })
+
+        //图片点击切换
+        $(document).on('click','.item_photo img',function(){
+            var src = $(this)[0].src;
+            $('.itemMainImg').find('img').attr('src',src);
+        })
+
+        //数字加减
+        $('.it_left_btn').click(function(){
+            var num =$(this).parent().find('.it_num_value');
+            if(num.val()>1){
+                var val = parseInt(num.val())-1;
+                num.val(val);
+            };
+        });
+        $('.it_right_btn').click(function(){
+            var num =$(this).parent().find('.it_num_value');
+            num.val(parseInt( num.val())+1);
+        });
+
+
+        //尺码点击选择分类
+        $(document).on('click','.item_chimaItem span',function(){
+            $(this).parent().find('.choosed').removeClass('choosed');
+            $(this).addClass('choosed');
+        })
+
+        //提交订单
+    });
+
+
+</script>
+
+<include file='Footer/footer' />

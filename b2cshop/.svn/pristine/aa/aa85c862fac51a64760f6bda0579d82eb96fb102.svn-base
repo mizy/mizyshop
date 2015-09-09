@@ -1,0 +1,53 @@
+.red{
+    color: red;
+}
+.padding-0{
+    padding: 0;
+}
+#admin_footer{
+    float: left;
+    width:100%;
+}
+.margin-top{
+    margin-top: 20px;
+}
+table{
+    font-size: 12px;
+}
+.clear{
+    clear:both;
+}
+select{
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.input_img{
+    width:auto;
+    height: 200px;
+}
+.long_select{
+    width: 400px;
+}
+.selectTree{
+    position: absolute;
+
+}
+.relative{
+    position: relative;
+}
+.select2-container{
+    padding-left:0;
+    padding-right: 0;
+    margin-left: 15px;
+    margin-right: 13px;
+}
+.del_btn{
+    cursor: pointer;
+}
+.fuwuItem input{
+    width: 40px;
+
+}
+.modImg,.addImg,.hotImg{
+    padding: 5px 0;
+}

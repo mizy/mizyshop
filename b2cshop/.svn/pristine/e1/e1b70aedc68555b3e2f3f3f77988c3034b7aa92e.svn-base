@@ -1,0 +1,45 @@
+<div id="company_info" class=" col-md-3">
+ <!--------company info----------->
+    <volist name="viewInfo" id="info">
+        <div class="">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><!-- <span class="glyphicon {$info['class']} "></span> --> {$info['title']}</h3>
+                </div>
+                <div class="panel-body">
+                    <notempty name="info['image_url']">
+                        <img src="{$info['image_url']}" alt="company info" />
+                    </notempty>
+                    <p>{$info['info']}  <a class="pull-right" href="__APP__/home/{$info['type']} " ><span>more</span> </a></p>
+                </div>
+            </div>
+        </div>
+    </volist>
+
+	<!-------hot news----------->
+
+    <volist name="hot" id="ho">
+        <notempty name="ho">
+            <div class="">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><!-- <span class="glyphicon glyphicon-heart"></span> --> {$ho['title']}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <volist name="ho['list']" id="hl">
+                            	<if condition="$hl.hot neq 2">
+                            		<li><a href="__APP__/home/{$ho['type']}/detail/id/{$hl['id']}">{$hl['title']}</a></li>
+                            	<else />
+                                	<li><a href="{$hl['from']}">{$hl['title']}</a></li>
+                                </if>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </notempty>
+    </volist>
+
+   
+</div>

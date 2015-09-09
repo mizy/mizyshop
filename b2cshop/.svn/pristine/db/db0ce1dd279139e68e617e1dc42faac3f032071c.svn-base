@@ -1,0 +1,34 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+        <body data-id="manage|manageUser">
+        <include file="Sider/index_left" />
+            <div class="container margin-top">
+                <div class="col-md-9 panel panel-info">
+                    <table class="table  table-bordered">
+                        <tr class=" panel-heading">
+                            <th class="col-md-2">id</th>
+                            <th class="col-md-2">用户名</th>
+                            <th class="col-md-2">类型</th>
+                            <th class="col-md-2">登录次数</th>
+                            <th class="col-md-2">上次登录时间</th>
+                            <th class="col-md-2">操作</th>
+                        </tr>
+                        <volist name="userList" id="ul">
+                            <tr>
+                                <td>{$ul.user_id}</td>
+                                <td>{$ul.user_name}</td>
+                                <td>{$ul.user_type}</td>
+                                <td>{$ul.visit_times}</td>
+                                <td>{$ul.lastTime}</td>
+                                <td>
+                                    <a   href="#" ><button type="button" class=".btn-xs btn btn-danger">删除用户</button></a>
+                                    <a   href="{:U('User/modUser')}"><button type="button" class=".btn-xs btn btn-warning ">修改</button></a>
+                                </td>
+                            </tr>
+                        </volist>
+                    </table>
+                </div>
+            </div>
+        </body>
+
+<include file="Footer/footer" />

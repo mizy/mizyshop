@@ -1,0 +1,54 @@
+<include file='Header/header' />
+<!------主页面------>
+<body data-id="Product">
+    <!--bread nav -->
+    <div class="btn-link">
+        <ol  class="breadcrumb ">
+            <li class="col-sm-offset-1"><a href="__APP__">Home</a></li>
+            <li><a href="__APP__/home/product" >Product</a></li>
+            <notempty name="class">
+                <li>{$class.title}</li>
+            </notempty>
+        </ol>
+    </div>
+
+    <!-----main product list-------->
+    <div class="container margin-top">
+        <include file="Sider/sider" />
+
+        <!----productList------>
+        <div id='product_list' class="col-md-9">
+            <div class="row">
+                <volist name="productList" id="pl" offset="0" length='12'>
+                    <div class="col-md-4 panel panel-pro">
+                        <div class="panel-heading">
+                            <a class="" href="__APP__/home/product/detail/?id={$pl['id']}">
+                                <img src="{$pl['image_url']}" alt="{$pl['image_name']}" />
+                            </a>
+                        </div>
+                        <div class="panel-body">
+                            <h4 ><strong><!-- <span class="glyphicon {$info['class']} "></span> --> {$pl['title']}</strong></h4>
+                           <!-- <span class="price" ><h4>$ {$pl['price']}</h4></span>-->
+                            <p>   {$pl['info']}...</p>
+                            <span class="pull-right more"><a href="__APP__/home/product/detail/?id={$pl['id']}">more</a></span>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+
+            <div class="row">
+                <div class="text-center">
+                    <ul class="pagination">
+                        {$showList}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</body>
+<include file='Footer/footer' />

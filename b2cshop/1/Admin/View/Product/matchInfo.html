@@ -1,0 +1,117 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+<style>
+    #admin_footer{
+        position: relative;
+        margin-top:20px;
+    }
+    .size_input,.color_input{
+        margin:5px auto;
+    }
+
+
+</style>
+
+<body data-id="Product|match">
+<include file="Sider/product_left" />
+<div class="row col-md-10">
+
+    <!--表单-->
+    <form id="addMatchForm" action="__APP__/Admin/Product/addMatchForm/" class="form-horizontal margin-top" enctype="multipart/form-data" role="form" method="post" >
+
+        <div class="form-group">
+            <label for="pd_title" class="col-sm-2 control-label"><span class="red">*</span> 搭配名：</label>
+            <div class="col-sm-9">
+                <input disabled value="{$match.title}" type="text" data-check="['^[\\S]{1,}$','必填项']" name="title" class="form-control" id="pd_title" placeholder="名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pd_class" class="col-sm-2 control-label"><span class="red">*</span> 搭配类目：</label>
+            <div class="">
+                <select disabled name="class" class=" col-sm-8"  id="pd_class">
+                    <volist name="classList" id="cl">
+                        <if condition="$cl['id'] eq $match['id']">
+                            <option value="{$cl.id}" data-module="{$cl.module}" selected="selected">{$cl.title}</option>
+                            <else/>
+                            <option value="{$cl.id}" data-module="{$cl.module}" >{$cl.title}</option>
+                        </if>
+                    </volist>
+                </select>
+                <script>
+                    $('#pd_class').select2({});
+                </script>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pd_hot" class="col-sm-2 control-label"><span class="red">*</span> 热门类型：</label>
+            <div class="col-sm-3">
+                <input  disabled value="{$match.hot}"  type="text" class="form-control" name="hot" id="pd_hot" placeholder="0" data-check="['^[0-1]{1}$','热门需为0或1']" /> <small>热门类型0为普通，1为栏目推荐 </small>
+            </div>
+            <label for="pd_status" class="col-sm-2 control-label"><span class="red">*</span> 状态：</label>
+            <div class="col-sm-3">
+                <select disabled  class="form-control" name="status" id="pd_status">
+                    <if condition="$match.status eq 0">
+                        <option selected="selected" value="0">下架</option>
+                        <option value="1">上架</option>
+                        <else />
+                        <option value="0">下架</option>
+                        <option selected="selected" value="1">上架</option>
+                    </if>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label  class="col-sm-2 control-label"><span class="red">*</span> 单品：</label>
+
+            <ul class=" col-sm-8 " data-value="{$match.item}" id="itemCan">
+
+            </ul>
+
+        </div>
+
+        <div class="form-group">
+            <label for="pd_hot" class="col-sm-2 control-label"><span class="red">*</span> 搭配描述：</label>
+            <div class="col-sm-8 ">
+                <textarea disabled class="form-control" name="desc">{$match.desc}</textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label   class="   col-sm-2 control-label"><span class="red">*</span>搭配图片</label>
+            <volist name="imgList" id="il">
+                <div class="col-sm-10 modImg clear col-sm-offset-2">
+                    <img src="{$il.url}" class="input_img" />
+                    <input value="{$il.title}" type="text" class="form-control hotImgDesc" >
+                </div>
+            </volist>
+        </div>
+
+
+        <a  id='add_btn' class="margin-top clear pull-left btn btn-primary  col-md-offset-5"  >保存</a>
+
+    </form>
+</div>
+
+
+</body>
+
+<include file="Footer/footer" />
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    seajs.config({
+        base: "__APP__/Common/js/"
+    });
+    seajs.use('addMatch',function(AddMatch){
+        var match = new AddMatch({
+            info:false
+        });
+        match.init();
+    });
+
+</script>

@@ -1,0 +1,70 @@
+<include file='Header/header' />
+<link href="__APP__/Common/css/user.css" rel="stylesheet"/>
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">造型师入驻</a>
+
+</div>
+<div class="container list_can ">
+    <!--申请-->
+    <form class="form-horizontal panel-body row col-md-offset-3 col-md-6" action="__APP__/Home/DesignerInfo/applyForm" role="form" id="Form" method="post">
+        <div class="form-group">
+            <label for="user_name" class="col-sm-3 control-label"><span class="red">*</span>姓名</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="name" data-check="['^[\\S]*$','类目名必填']"  id="user_name"  >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span class="red">*</span>手机</label>
+            <div class="col-sm-6">
+                <input type="text" name="phone" class="form-control" data-check="['^[0-9_]*$','手机号必填']"   placeholder="">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label  class="col-sm-3 control-label "><span class="red">*</span>身份证号</label>
+           <div class="col-sm-6">
+                <input type="text" name="idCard" class="form-control input-sm" data-check="['^[0-9_x]*$','必填项']"  >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span class="red">*</span>地址</label>
+            <div class="col-sm-6">
+                <textarea name="address" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span class="red">*</span>资质/证书</label>
+            <div class="col-sm-6">
+                <textarea name="zizhi" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label"><span class="red">*</span>作品/经历</label>
+            <div class="col-sm-6">
+                <textarea name="zuoping" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit"   class="b1_b_btn col-sm-6 btn-primary">申请</button>
+             </div>
+        </div>
+    </form>
+
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+     seajs.use('__APP__/Common/js/checkForm',function(CheckForm){
+        $('#Form').on('submit',function(){
+            var checkForm = new CheckForm('#Form')
+            if(checkForm.getResult()){
+                this.submit();
+            }
+        })
+
+     })
+</script>
+
+
+<include file='Footer/footer' />

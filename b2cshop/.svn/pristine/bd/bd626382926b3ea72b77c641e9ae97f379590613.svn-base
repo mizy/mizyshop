@@ -1,0 +1,67 @@
+<include file="Header/header" />
+<body style="background: #0088cc">
+<style>
+    #loginForm{
+        margin-top:50px;
+        margin-bottom: 50px;
+    }
+</style>
+<div  class="container">
+    <div class="col-md-offset-3 col-md-6">
+
+        <div class="panel login-panel panel-info" style="margin-top: 120px;margin-bottom:100px">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">模范行装后台管理系统</h3>
+            </div>
+            <form class="form-horizontal panel-body" role="form" id="loginForm" method="post">
+                <div class="form-group">
+                    <label for="user_name" class="col-sm-3 control-label">用户名</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="user_name" id="user_name" placeholder="user_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">密码</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="password" class="form-control" id="password" placeholder="password">
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <span class="tips text-center pull-right help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="verify" class="col-sm-3 control-label ">验证码</label>
+                    <div class="col-sm-4">
+                        <input type="text"  class="form-control input-sm" id="verify" placeholder="">
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <span class="tips text-center pull-right help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                           <a href="#"><img  id="verifyCode" src="__APP__/Admin/Login/verify/" /></a>
+                        <script>
+                            document.getElementById('verifyCode').onclick=function(){
+                                this.src=this.src+"?m="+Math.random();
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" id="loginButton" onclick="return false" class="btn col-sm-6 btn-primary">登录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    seajs.use("__APP__/Common/js/login.js",function(Login){
+       new Login({});
+    })
+</script>
+<include file="Footer/footer" />

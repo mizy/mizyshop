@@ -1,0 +1,88 @@
+<include file='Header/header' />
+<link href="__APP__/Common/css/user.css" rel="stylesheet"/>
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="http://b1queen.com">首页</a> ><a href="__APP__/Home/User">个人中心</a>
+</div>
+
+<div class="container list_can ">
+    <!--左边-->
+    <include file='User/user_left' />
+    <script>
+        $(document).ready(function(){
+            $('#user_my_ifno').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <div class="user_header">我的信息</div>
+        <div class="user_address_can">
+            <div class="add_new_address">
+                <div><a href="#" target="_blank">个人信息修改</a></div>
+                <form id="modInfoForm" action="/Home/User/modInfoForm.html" class="form-horizontal margin-top" enctype="multipart/form-data" role="form" method="post">
+                    <input type="hidden" value="{$id}" name="id">
+
+                    <div class="form-group">
+                        <label for="af_title" class="col-sm-2 control-label"><span class="red">*</span> 邮箱：</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static" id="af_title"  >{$user.email}</p>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="af_code" class="col-sm-2 control-label"><span class="red">*</span> 用户名：</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static" id="af_code"  >{$user.username}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="af_name" class="col-sm-2 control-label"><span class="red">*</span> 电话：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control " id="af_name" value="{$user.phone}" name="phone" data-check="['(^[0-9_]{7,15}$)|^(\\s)$','号码填写错误']"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label   class="col-sm-2 control-label"> 性别：</label>
+                        <if condition="$user['sex'] eq 0">
+                            <label class="radio-inline">
+                                <input type="radio" checked="checked" name="sex"  value="0"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex"   value="1"> 女
+                            </label>
+                        <else />
+                            <label class="radio-inline">
+                                <input type="radio" name="sex"  value="0"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" checked="checked"  name="sex"   value="1"> 女
+                            </label>
+                        </if>
+                    </div>
+                    <a class="col-md-offset-5 b1_b_btn save_btn">保存</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+
+
+    seajs.use('/Common/js/checkForm',function(CheckForm){
+
+        //保存
+        $('.save_btn').on('click',function(){
+            var checkForm = new CheckForm('#modInfoForm');
+            if(checkForm.getResult()){
+                $('#modInfoForm').submit();
+            }
+        })
+
+    })
+
+
+</script>
+
+
+<include file='Footer/footer' />

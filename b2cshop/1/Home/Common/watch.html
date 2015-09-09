@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="./website/js/jquery.js"></script>
+<script type="text/javascript" src="./photobooth_min.js"></script>
+<script type="text/javascript"  src="./website/js/webcam.js">></script>
+<title>WEB照相</title>
+</head>
+<style>
+	header{
+		text-align: center;
+		font-size: 18px;
+		font-weight: 700px;
+	}
+	.content{
+		display: block;
+
+		padding-top: 100px;
+		
+	}
+	#webcam{
+		width: 700px;
+		background: #cccccc;
+		height: 400px;
+		display: block;
+		margin: 0 auto;
+	}
+	#gallery{
+		display: block;
+		width: 100%;
+		
+	}
+	#gallery img{
+		display: block;
+		margin: 5px 5px 5px 5px;
+		margin: 0 auto;
+	}
+	ul{
+		list-style: none;
+		padding: 0;
+	}
+	li{
+		list-style: none;
+	}
+</style>
+<body>
+	<header>web照相机</header>
+	<div class="content">
+		<div id="webcam">
+		</div>
+		<div id="gallery">
+		</div>
+	</div>
+</body>
+</html>
+<script>
+(function(){
+	$('#webcam').photobooth().on("image",function( event, dataUrl ){
+		$( "#gallery" ).append( '<img src="' + dataUrl + '" >');
+		imlook.upload(dataUrl);
+	});
+})();
+</script>

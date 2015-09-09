@@ -1,0 +1,113 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+ <style>
+     #admin_footer{
+         position: relative;
+     }
+
+ </style>
+        <!------------ueditor---------------------->
+
+<body data-id="Setting|index">
+<include file="Sider/setting_left" />
+<div class="container margin-top">
+    <div class="col-md-9 panel padding-0 panel-info">
+        <div class="panel-heading ">
+            <h2 class="panel-title">管理网站</h2>
+        </div>
+
+        <!--表单-->
+        <form role="form" id="siteForm" class="col-md-11 form-horizontal margin-top" action="/Admin/Setting/ajaxSettingForm/" method="post"  >
+
+            <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label"><span style="color: #ff0000">*</span>网站名</label>
+                <div class="col-sm-9">
+                        <input type="text" name="content" id='name'   value="{$site.content}" data-check="['^\\S{1,}$','不能为空']" />
+                        <input type="hidden"   name="id" value="{$site.id}" />
+                        <input type="hidden"  name="name" value="{$site.name}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                    <label  class="col-sm-3 control-label">网站logo:</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="file" name="logo_file"/>
+                        <input type="hidden" id="image_url" name="logo" value="{$site.logo}" />
+                         <div id="image_show" class="margin-top">
+                                <img class="input_img" src="{$site.logo}">
+                         </div>
+                    </div>
+                   
+            </div>
+
+            <div class="form-group">
+                    <label  for="description"  class="col-sm-3 control-label"><span style="color: #ff0000">*</span>网站描述:</label>
+                    <div class="col-sm-6">
+                        <textarea type="text" name="desc" id="description"  >{$site.desc}</textarea>
+                    </div>
+            </div>
+
+
+            <div class="form-group text-center ">
+                <a  id='add_btn'  class="btn btn-primary text-center"  >保存</a>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script><script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+
+        //点击上传图片
+        $(document).on('change','input.file',function(){
+            var _self = this;
+            $('#siteForm').ajaxSubmit({
+                url:'__APP__/Admin/Setting/ajaxImgUpload',
+                data:{name:'logo_file'},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        $('#image_url').val(data.url);
+                        $('#image_show').html('<img class="input_img" src="'+data.url+'"/>');
+                    }else{
+                        alert('wrong!'+data);
+                    }
+                }
+            })
+        });
+
+        //表单事件
+        $("#add_btn").click(function(){
+
+            var checkForm = new CheckForm('#siteForm');
+            if(checkForm.getResult()){
+                $('#add_btn').text('保存中。。。');
+                $('#siteForm').ajaxSubmit({
+                    url:"/Admin/Setting/ajaxSettingForm",
+                    type:'post',
+
+                    success:function(data){
+                        if(data=="success"){
+                            $('#add_btn').text('保存成功，即将返回');
+                            setTimeout(function(){
+                                window.location.href = '/Admin/Setting/index.html';
+                            },1000)
+                        }else{
+                            alert("保存失败:"+data)
+                        }
+
+                    }
+                })
+            }
+        });
+
+    });
+
+
+</script>

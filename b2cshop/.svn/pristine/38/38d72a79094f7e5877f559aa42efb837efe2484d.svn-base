@@ -1,0 +1,46 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Module|index">
+<include file="Sider/module_left" />
+<div class="col-md-10 row">
+
+    <form style="margin-bottom: 10px" class="form-inline" role="form" action="./">
+
+            <a class="btn btn-primary "  href="{:U('Module/addProperty')}?id={$id}">+添加属性</a>
+
+    </form>
+    <div class=" panel panel-info">
+
+        <div class="panel-heading">
+            <div class="panel-title"> {$father} > 属性</div>
+        </div>
+
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+                <th >id</th>
+                <th >属性名</th>
+                <th>英文简称</th>
+                <th>筛选</th>
+                <th>是否分类</th>
+                <th>操作</th>
+            </tr>
+            <volist name="propertyList" id="pl">
+                <tr data-id="{$pl.id}">
+                    <td>{$pl.id}</td>
+                    <td>{$pl.title}</td>
+                    <td>{$pl.name}</td>
+                    <td>{$pl.hot}</td>
+                    <td>{$pl.class}</td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this,'./deleteProperty')"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+                        <a class="btn-link btn-warning" href="{:U('Module/modProperty')}?id={$pl.id}"><button type="button" class="btn btn-xs btn-warning ">修改</button></a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />

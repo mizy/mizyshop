@@ -1,0 +1,108 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Order|index">
+<include file="Sider/order_left" />
+<div class="col-md-10 row">
+
+    <form style="margin-bottom: 10px" class="form-inline" role="form" action="./">
+
+        <div class="form-group">
+
+            <div class="input-group">  排序：
+
+            </div>
+
+            <div class="input-group">
+                <ul class="list-inline ul_btn" style="margin-bottom: 0;margin-right: 10px;">
+                    <li id="create_time" class="btn btn-default" data-value="0">未付款</li>
+                   <li id="visit_times" class="btn btn-default"  data-value="1">未发货</li>
+                    <li id="sold_num" class="btn btn-default" data-value="2" >已发货</li>
+                    <input class="ul_btn_value" type="hidden" name="orderType" value="{$orderType}">
+                </ul>
+                <script>
+                    (function(){
+                        $('.ul_btn li').click(function(){
+                           var val = $(this).attr('data-value');
+                            location.href="__APP__/Admin/Order/index.html?orderType="+val;
+                        });
+                        var orderType = $('.ul_btn_value').val();
+                        $('.ul_btn').find('#'+orderType).addClass('active');
+                    })();
+                </script>
+            </div>
+        </div>
+
+    </form>
+
+    <div class=" panel panel-info">
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+<!--
+                <th><input type="checkbox" id="check_all"></th>
+-->
+                <th>订单id</th>
+                <th>价格</th>
+                <th>订单时间</th>
+                <th>类型</th>
+
+                <th>用户id</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <volist name="orderList" id="ol">
+                <tr data-id="{$ol.id}">
+<!--
+                    <td><input type="checkbox" data-id="{$pl.id}" class="checkbox"></td>
+-->
+                    <td>{$ol.order_id}</td>
+                    <td>{$ol.total_price}</td>
+                    <td>{$ol.order_time}</td>
+                    <td>
+                        <if condition="$ol['type'] eq 'good' ">
+                            商品订单
+                            <else />
+                            预约订单
+                        </if>
+                    </td>
+                    <td>{$ol.user}</td>
+                    <td>
+                        <if condition="$ol.status eq 0">
+                            <span>未付款</span>
+                        <elseif condition="$ol.status eq 1" />
+                            <span>已付款,未发货</span>
+                        <else/>
+                            <p>已发货</p>
+                            <p>运单号:{$ol.billNo}</p>
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$ol['type'] eq 'good' ">
+                            <a class="btn-link btn-danger"  href="{:U('Order/OrderInfo')}?id={$ol.id}"> 订单详情 </a>
+                            <else />
+                            <a class="btn-link btn-danger"  href="{:U('Order/yuyueInfo')}?id={$ol.id}"> 预约详情 </a>
+                        </if>
+                        <a class="btn-link btn-warning" href="{:U('Order/modOrder')}?id={$ol.id}"> 操作/修改 </a>
+                        <a class="btn-link btn-primary" onclick="deleteNode(this,'__ROOT__/Admin/Order/deleteThis')" >删除</a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+     <!--   <div style="width: 190px;margin: 20px auto" >
+            <label class="show_text">选中项：</label>
+            <select id="batch_type" class="mul-op ">
+                <option value="delete">删除</option>
+                <option value="shangjia">发货</option>
+            </select>
+            <a class="  btn btn-primary" id="ok_btn">确定</a>
+        </div>-->
+    </div>
+
+    <div class="row">
+        <div class="text-center">
+            <ul class="pagination">
+                {$showList}
+            </ul>
+        </div>
+    </div>
+</div></body>
+<include file="Footer/footer" />

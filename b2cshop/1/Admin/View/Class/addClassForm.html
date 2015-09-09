@@ -1,0 +1,19 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Class|addClass">
+<include file="Sider/class_left" />
+<div class="row col-md-8 margin-top">
+
+    <div class="col-md-6 col-md-offset-3 margin-top text-center">
+        {$tip}
+        <p class="help-block"><a href="{:U('Class/addClass')}">即将返回。。。</a></p>
+    </div>
+    <script>
+        setTimeout(function(){
+            window.location.href = "{:U('Class/addClass')}";
+        },3500)
+    </script>
+</div>
+</body>
+
+<include file="Footer/footer" />

@@ -1,0 +1,117 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="User|index">
+<include file="Sider/user_left" />
+<div class="col-md-10 row">
+    <div class="panel panel-info padding-0">
+        <div class="panel-heading">
+            <div class="panel-title">修改用户</div>
+        </div>
+        <div class="panel-body">
+            <form role="form" class="col-md-10 col-md-offset-1 form-horizontal" action="./modUserForm" method="post" id="addUserForm" >
+
+                <input type="hidden" name="id" value="{$user.id}">
+
+                <div class="form-group">
+                    <label for="user"  class="text-info col-sm-2 control-label"><span class="red">*</span> 用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{$user.username}" readonly name="username" id="user" data-check="['^[a-zA-Z0-9_]{5,19}$','用户名需为大小写字母,数字或下划线构成,长度小于19大于5']" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nick_name"  class="text-info col-sm-2 control-label"> 昵称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" value="{$user.nick_name}" name="nick_name" id="nick_name" data-check="['^(.){0,18}|[\s]*$','昵称不能过长']" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="text-info col-sm-2 control-label"><span class="red">*</span> 用户类型</label>
+                    <div class="col-sm-10">
+                        <if condition="$user.type eq 0">
+                            <label class="radio-inline">
+                                <input type="radio" name="user_type"  checked="checked" value="0"> 普通用户
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="user_type"   value="1"> 管理员
+                            </label>
+                        <else />
+                            <label class="radio-inline">
+                                <input type="radio" name="user_type"   value="0"> 普通用户
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="user_type"  checked="checked" value="1"> 管理员
+                            </label>
+                        </if>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label  class="text-info col-sm-2 control-label"> 性别</label>
+                    <div class="col-sm-10">
+                        <if condition="$user.sex eq 0">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" checked="checked" value="0"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="1"> 女
+                            </label>
+                        <else/>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex"  value="0"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" checked="checked" value="1"> 女
+                            </label>
+                        </if>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email"  class="text-info col-sm-2 control-label"> 邮箱</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" value="{$user.email}" name="email" data-check="['^((([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+)|[\s]*)$','邮箱格式输入有误']" id="email" placeholder="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone"  class="text-info col-sm-2 control-label"> 手机</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" value="{$user.phone}" name="phone" id="phone" data-check="['^(([0-9]{11})|([\s]*))$','手机格式输入有误']" placeholder="">
+                    </div>
+                </div>
+
+
+
+                <a  id="add_btn" class="col-md-4 col-md-offset-4 btn btn-primary">确定</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+        $("#add_btn").click(function(){
+            //去除错误提示
+            $('.has-error').each(function(){
+                $(this).removeClass('.has-error');
+                $(this).find('.help-block').remove();
+            });
+
+            var checkForm = new CheckForm('#addUserName');
+            if(checkForm.getResult()){
+                $('#addUserForm').submit()
+            }
+        });
+
+        //去除提升
+        $("input").click(function(){
+            $(this).parents('.has-error').removeClass('has-error');
+            $(this).parent().find('.help-block').remove();
+        })
+
+    });
+
+</script>
+<include file="Footer/footer" />

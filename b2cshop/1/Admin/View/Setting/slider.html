@@ -1,0 +1,137 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+<style>
+    #admin_footer{
+        position: relative;
+    }
+
+</style>
+<body data-id="Setting|slider">
+<include file="Sider/setting_left" />
+<div class="container margin-top">
+    <div class="col-md-9 panel padding-0 panel-info">
+        <div class="panel-heading ">
+            <h2 class="panel-title">管理网站</h2>
+        </div>
+
+        <!--表单-->
+
+        <form  role="form" id="sliderForm" class="col-md-11 form-horizontal"  >
+
+            <div class="form-group">
+                <label class="text-info  col-sm-2 control-label"><span class="red">*</span>幻灯片1</label>
+                <div data-id="{$img1.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                    <input type="file" class="file" name="slider2">
+                    <img src="{$img1.logo}" class="input_img" />
+                    <input type="text" value="{$img1.content}"  placeholder="跳转地址"  class="form-control sliderImg" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-info  col-sm-2 control-label"><span class="red">*</span>幻灯片2</label>
+                <div data-id="{$img2.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                    <input type="file" class="file" name="slider2">
+                    <img src="{$img2.logo}" class="input_img" />
+                    <input type="text" value="{$img2.content}"   placeholder="跳转地址"  class="form-control sliderImg" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="text-info  col-sm-2 control-label"><span class="red">*</span>幻灯片3</label>
+                <div data-id="{$img3.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                    <input type="file" class="file" name="slider3">
+                    <img src="{$img3.logo}" class="input_img" />
+                    <input type="text" value="{$img3.content}"  placeholder="跳转地址"   class="form-control sliderImg" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="text-info  col-sm-2 control-label"><span class="red">*</span>幻灯片4</label>
+                <div data-id="{$img4.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                    <input type="file" class="file" name="slider4">
+                    <img src="{$img4.logo}" class="input_img" />
+                    <input type="text" value="{$img4.content}"  placeholder="跳转地址"    class="form-control sliderImg" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="text-info  col-sm-2 control-label"><span class="red">*</span>幻灯片5</label>
+                <div data-id="{$img5.id}" class="col-sm-10 clear col-sm-offset-2 modImg">
+                    <input type="file" class="file" name="slider5">
+                    <img src="{$img5.logo}" class="input_img" />
+                    <input type="text" value="{$img5.content}" placeholder="跳转地址"  class="form-control sliderImg" >
+                </div>
+            </div>
+            <div class="form-group text-center ">
+
+                <a  id='add_btn'  class="btn btn-primary text-center"  >保存</a>
+             </div>
+          </form>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+
+    seajs.use('',function(){
+
+        //点击上传图片
+        $(document).on('change','input.file',function(){
+            var _self = this;
+            var name = $(this).attr('name');
+            $('#sliderForm').ajaxSubmit({
+                url:'__APP__/Admin/Setting/ajaxImgUpload',
+                data:{name:name},
+                type:'post',
+                dataType:'json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        $(_self).next('img').attr('src',data.url);
+                    }else{
+                        alert('wrong!'+data);
+                    }
+                }
+            })
+        });
+
+        //表单事件
+        $("#add_btn").click(function(){
+
+                //获取得到的图片数据
+                var imgData = [];
+                $('.modImg').each(function(index,obj){
+                    imgData[index] = {};
+                    imgData[index].url = $(obj).find('img')[0].src;
+                    imgData[index].content = $(obj).find('.sliderImg').val();
+                    imgData[index].id = $(obj).attr('data-id');
+                });
+
+                $('#add_btn').text('保存中。。。');
+                $.ajax({
+                    url:"/Admin/Setting/ajaxSliderForm",
+                    type:'post',
+                    data:{imgData:JSON.stringify(imgData) },
+                    success:function(data){
+                        if(data=="success"){
+                            $('#add_btn').text('保存成功，即将返回');
+                            setTimeout(function(){
+                                window.location.href += '';
+                            },1000)
+                        }else{
+                            alert("保存失败:"+data)
+                        }
+
+                    }
+                })
+        });
+
+    });
+
+
+</script>

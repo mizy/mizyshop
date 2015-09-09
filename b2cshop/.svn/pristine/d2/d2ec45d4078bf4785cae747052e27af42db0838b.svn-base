@@ -1,0 +1,44 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="News|index">
+<include file="Sider/news_left" />
+<div class="container margin-top">
+    <div class="col-md-9 panel panel-info">
+        <table class="table  table-bordered">
+            <tr class="text-center panel-heading">
+                <th class="col-md-1">id</th>
+                <th class="col-md-3">title</th>
+                <th class="col-md-1">浏览次数</th>
+                <th class="col-md-2">源自</th>
+                <th class="col-md-1">热门类型</th>
+                <th class="col-md-2">上次修改时间</th>
+                <th class="col-md-2">操作</th>
+            </tr>
+            <volist name="newsList" id="nl">
+                <tr data-id="{$nl.id}">
+                    <td>{$nl.id}</td>
+                    <td>{$nl.title}</td>
+                    <td>{$nl.visit_times}</td>
+                    <td>{$nl.from}</td>
+                    <td>{$nl.hot}</td>
+                    <td>{$nl.lastTime}</td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this,'__ROOT__/Admin/News/deleteThis')"  href="#" ><button type="button"  class="btn btn-xs btn-danger">删除</button></a>
+                        <a class="btn-link btn-warning" href="{:U('News/modNews')}?id={$nl.id}"><button type="button" class="btn btn-xs btn-warning ">修改</button></a>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+
+        <div class="row">
+            <div class="text-center">
+              <ul class="pagination">
+                 {$showList}
+              </ul>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<include file="Footer/footer" />

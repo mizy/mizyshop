@@ -1,0 +1,49 @@
+<include file='Header/header' />
+<link href="__APP__/Common/css/user.css" rel="stylesheet"/>
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> ><a  >支付方式</a>
+
+</div>
+<style>
+    .order_info{
+        margin:20px 0;
+        text-align: left;
+        padding: 20px;
+        border: 1px solid #cccccc
+    }
+    .choose_pay{
+        border-top: 2px solid #000;
+    }
+    .choose_pay .header{
+        font-size: 18px;
+        margin:10px 0;
+
+    }
+     .pay_list .pay_item{
+        border: 1px solid #cccccc;
+        float: left;
+        margin-right: 20px;
+        padding: 5px;
+    }
+    #alipay img{
+        width: 120px;;
+    height: 30px;
+     }
+</style>
+<div class="container list_can ">
+    <div class="order_info">
+        <p>订单ID：{$order.order_id}</p>
+        <p>总价：￥{$order.total_price}</p>
+        <p>时间：{$order.order_time}</p>
+        <p>地址：{$order.address_id}</p>
+    </div>
+    <div class="choose_pay">
+        <div class="header">选择支付方式:</div>
+        <div class="pay_list">
+            <a class="pay_item" id="alipay" href="/Home/Pay/alipay.html?id={$order.id}" ><img src="https://i.alipayobjects.com/i/localhost/png/201406/2m8C9z7xQ5_src.png" alt="支付宝"/></a>
+            <a  class="pay_item" href="/Home/Pay/chinapay.html?id={$order.id}"> <div >银联</div></a>
+        </div>
+     </div>
+</div>
+<include file='Footer/footer' />

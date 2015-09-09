@@ -1,0 +1,59 @@
+<include file='Header/header' />
+<!------主页面------>
+<body data-id="Product">
+
+    <!--bread nav -->
+    <div class="btn-link">
+        <ol  class="breadcrumb ">
+            <li class="col-sm-offset-1"><a href="__APP__">Home</a></li>
+            <li><a href="__APP__/home/product" >Product</a></li>
+            <li>{$product.title}</li>
+        </ol>
+    </div>
+
+    <div class="container margin-top">
+
+        <include file="Sider/sider" />
+
+        <div class="col-md-9">
+
+            <!--#######################product info###################-->
+            <div class="panel panel-red">
+
+                    <div class="panel-heading">
+                        <span class="panel-title">{$product.title}</span>
+                        <div class="pull-right"><span class="glyphicon glyphicon-eye-open"></span> <span class="badge">{$product.visit_times}</span></div>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="jumbotron">
+                            	<div class="row">
+                                <p>  <img class="pull-right" src="{$product.image_url}" />
+                                <h1>{$product.title}</h1>
+                                </p>
+                                </div>
+                                <!--<p><h2>Price:<span style="color: #e91b23">${$product.price}</span></h2>
+                                </p>-->
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="panel-heading">
+                                <span style="color:#c0c0c0;font-size: 13px;" class="page-header">Product Detail</span>
+                            </div>
+
+                            <div class="info panel-body">
+
+                                {$product.info}
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<include file='Footer/footer' />

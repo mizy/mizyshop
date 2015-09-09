@@ -1,0 +1,98 @@
+<include file='Header/header' />
+<link href="__APP__/Common/css/user.css" rel="stylesheet"/>
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">个人中心</a>
+ </div>
+
+<div class="container list_can ">
+    <!--左边-->
+    <include file='User/user_left' />
+    <script>
+        $(document).ready(function(){
+            $('#user_collect').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <div class="user_header">赞过的商品</div>
+        <div class="user_collect_can">
+            <div class="itemCan margin-top row">
+                <volist name="itemList" id="iL">
+                    <div class="item col-md-3">
+                        <div class="img">
+                            <a href="__APP__/Home/Item/index.html?id={$iL.id}" >
+                                <img src="{$iL['url']}" alt="{$iL.title}">
+                            </a>
+
+                        </div>
+                        <div class="item_list_info">
+                            <span class="item_title">{$iL.title}</span>
+                            <div class="item_price">
+                                RMB&nbsp;&nbsp;<span class="m_font">{$iL.price}</span>
+                                <span class="item_zan">赞:{$iL.zan}</span>
+                            </div>
+                        </div>
+                        <div class="deleteItem" data-id="{$iL.id}">x</div>
+                    </div>
+                </volist>
+            </div>
+            <div class="page">
+                <ul class="pagination">
+                    {$showList}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+    (function(){
+        //click效果
+        $(document).on('click','.iconLeftTrim',function(){
+            var grand = $(this).parent().parent();
+            if($(grand).hasClass('active')){
+                $(grand).removeClass('active');
+            }else{
+                $(grand).addClass('active');
+            }
+        });
+
+        //orderType
+        //orderType
+        var orderType = $('.user_tab').attr('data-value');
+        if(orderType==''){
+            $('.user_tab a:first').addClass('current');
+        }else{
+            $('.user_tab').find('.'+orderType).addClass('current');
+        }
+
+        //hover item
+        $('.item').mouseover(function(){
+           $(this).addClass('hover');
+        }).mouseout(function(){
+           $(this).removeClass('hover');
+        });
+
+        //delete collect item
+        $('.deleteItem').click(function(){
+            var _self = this;
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url:'__APP__/Home/User/deleteCollect.html',
+                data:{id:id},
+                success:function(data){
+                    if(data=='success'){
+                        $(_self).parent().remove();
+                    }
+                }
+            })
+        })
+    })()
+
+
+
+</script>
+
+
+<include file='Footer/footer' />

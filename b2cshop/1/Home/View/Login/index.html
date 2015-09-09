@@ -1,0 +1,58 @@
+<include file='Header/header' />
+<!------主页面------>
+ <style>
+     #loginForm{
+         padding: 100px 0;;
+     }
+ </style>
+<form class="form-horizontal panel-body row col-md-offset-3 col-md-6" role="form" id="loginForm" method="post">
+    <div class="form-group">
+        <label for="user_name" class="col-sm-3 control-label">用户名/邮箱</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="user_name" id="user_name" placeholder="用户名/邮箱">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="col-sm-3 control-label">密码</label>
+        <div class="col-sm-6">
+            <input type="password" name="password" class="form-control" id="password" placeholder="">
+        </div>
+        <div class="col-sm-3 text-center">
+            <span class="tips text-center   help-block"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="verify" class="col-sm-3 control-label ">验证码</label>
+        <div class="col-sm-4">
+            <input type="text"  class="form-control input-sm" id="verify" placeholder="">
+        </div>
+        <a href="__APP__/Home/Login/forgetPassword.html" class="pull-left"  ><small style="color: #777777">忘记密码?</small></a>
+        <div class="col-sm-3 text-center">
+            <span class="tips text-center   help-block"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+            <a href="#"><img  id="verifyCode" src="__APP__/Home/Login/verify/" /></a>
+            <script>
+                document.getElementById('verifyCode').onclick=function(){
+                    this.src="__APP__/Home/Login/verify/"+"?m="+Math.random();
+                }
+            </script>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" id="loginButton" onclick="return false" class="b1_b_btn col-sm-6 btn-primary">登录</button>
+            <a href="__APP__/Home/Login/register.html" style="padding-left: 10px;line-height: 31px;color: #777777">立即注册</a>
+        </div>
+    </div>
+</form>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+    seajs.use("__APP__/Common/js/login.js",function(Login){
+        new Login({});
+    })
+</script>
+
+<include file='Footer/footer' />

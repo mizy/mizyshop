@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse " role="navigation">
+    <div class="navbar-header">
+        <div class="navbar-text">
+            <a href="/"><strong>模范行装</strong></a>
+        </div>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li id="Custom"><a href="{:U('Custom/index')}" >造型师</a></li>
+    </ul>
+    <div class="col-md-2  pull-right">
+        <div class="btn-group" style="margin-top: 10px;">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                {$user_name} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('Logout/index')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

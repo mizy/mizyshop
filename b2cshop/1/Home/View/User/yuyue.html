@@ -1,0 +1,85 @@
+<include file='Header/header' />
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">个人中心</a>>预约的服务
+</div>
+<div class="container list_can ">
+    <!--左边-->
+    <include file='User/user_left' />
+
+    <script>
+        $(document).ready(function(){
+            $('#user_yuyue').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <div class="user_order_can">
+            <div class="user_order">
+                <table class="user_order_table">
+                    <thead>
+                    <th class="col-md-4">订单号</th>
+                    <th class="col-md-2" style="text-align: left">预约信息</th>
+                    <th class="col-md-1">时间</th>
+                    <th class="col-md-1">单价</th>
+                    <th class="col-md-2">总计</th>
+                    <th class="col-md-2">状态</th>
+                    </thead>
+                    <volist name="orderList" id="oL" key="oLi">
+                        <tbody style="display: block;height: 0;width: 100%;border: 0"></tbody>
+                        <tbody data-order="{$oL.id}">
+                        <tr class="orderItem_header">
+                            <td colspan="6" style="text-align: left;padding: 5px;">
+                                 <p>{$oL.order_time}
+                                &nbsp;&nbsp;&nbsp;&nbsp;订单号:{$oL.order_id} </p>
+                                 <p>地址：{$oL.address_id}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="user_item">
+                                <a class="user_item_img" href="__APP__/Home/Designer/index.html?id={$oL['designer']['id']}"><img src="{$oL['designer']['url']}" alt="{$designer['title']}"></a>
+                                <a href="__APP__/Home/Designer/index.html?id={$oL['designer']['designer']}" class="user_item_title">{$oL['designer']['name']}</a>
+                            </td>
+                            <td class=" user_item_info" style="text-align: left">
+
+                                <p>服务:{$oL.fuwu}</p>
+
+                            </td>
+                            <td class="user_num">
+                                <p>{$oL.num}</p>
+                            </td>
+                            <td class="user_price">
+                                <p>{$oL['designer']['price']}</p>
+                            </td>
+                            <td class="user_order_totalPrice"  >
+
+                                <p>{$oL.total_price}</p>
+                            </td>
+                            <td class="user_order_status"  >
+                                <if condition="$oL.status eq 0">
+                                    <a href="/Home/Cart/pay.html?id={$oL.id}" class="m_font">未支付</a>
+                                    <elseif condition="$oL.status eq 1"/>
+                                    <p>支付成功,等待服务</p>
+                                    <elseif condition="$oL.status eq 2" />
+                                    <p>服务已完成</p>
+                                    <else/>
+                                    <p>交易成功</p>
+                                </if>
+                            </td>
+                         </tr>
+                      </tbody>
+                    </volist>
+                </table>
+                <div class="page">
+                    <div class="pagination">{$showList}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+
+
+
+<include file='Footer/footer' />

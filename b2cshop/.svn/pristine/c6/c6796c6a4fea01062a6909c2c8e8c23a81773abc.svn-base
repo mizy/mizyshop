@@ -1,0 +1,17 @@
+<div class="col-md-2 ">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span class="panel-heading">管理</span>
+        </div>
+
+        <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked">
+                <li id="index"  ><a href="{:U('Product/index')}">所有单品</a></li>
+                <li id="addProduct"><a href="{:U('Product/addProduct')}">添加单品</a></li>
+                <li id="match"  ><a href="{:U('Product/match')}">所有搭配</a></li>
+                <li id="addMatch"><a href="{:U('Product/addMatch')}">添加搭配</a></li>
+                <li id="brand"><a href="{:U('Brand/index')}">品牌管理</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

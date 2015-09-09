@@ -1,0 +1,14 @@
+<div class="col-md-2 ">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span class="panel-heading">管理</span>
+        </div>
+
+        <div class="panel-body">
+            <ul class=" nav   nav-pills nav-stacked">
+                <li   id="index"  ><a href="{:U('User/index')}">用户管理</a></li>
+                <li   id="addUser"> <a href="{:U('User/addUser')}">添加用户</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

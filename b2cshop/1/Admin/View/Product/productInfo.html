@@ -1,0 +1,221 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+
+<style>
+    #admin_footer{
+        position: relative;
+        margin-top:20px;
+    }
+    .size_input,.color_input{
+        margin:5px auto;
+    }
+
+
+</style>
+
+
+<body data-id="Product|addProduct">
+<include file="Sider/product_left" />
+<div class="row col-md-10">
+<ul class="nav nav-tabs tab" role="tablist">
+    <li class="active"><a href="#basetab" role="tab" data-toggle="tab">基本信息</a> </li>
+    <li  ><a href="#othertab" role="tab" data-toggle="tab">其它属性</a> </li>
+    <li  ><a href="#detailtab" role="tab" data-toggle="tab">详细描述</a> </li>
+    <li  ><a href="#phototab" role="tab" data-toggle="tab">商品相册</a> </li>
+</ul>
+
+<!--表单-->
+<form id="modProductForm"  class="form-horizontal margin-top" enctype="multipart/form-data" role="form " >
+    <input type="hidden" name="id" value="{$product.id}">
+    <div class="tab-content margin-top row">
+
+        <!--基础属性-->
+        <div class="tab-pane fade  active in" id="basetab">
+            <div class="form-group">
+                <label for="pd_title" class="col-sm-2 control-label"><span class="red">*</span> 商品名：</label>
+                <div class="col-sm-9">
+                    <input disabled value="{$product.title}" type="text" data-check="['^[\\S]{1,}$','必填项']" name="title" class="form-control" id="pd_title"  >
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label  class="col-sm-2 control-label"><span class="red">*</span> 商品类目：</label>
+                <div class="col-sm-9">
+                    <select disabled name="class" class="form-control"  id="pd_class">
+                        <volist name="classList" id="cl">
+                            <if condition="$cl['id'] eq $product['id']">
+                                <option value="{$cl.id}" data-module="{$cl.module}" selected="selected">{$cl.title}</option>
+                                <else/>
+                                <option value="{$cl.id}" data-module="{$cl.module}" data-module={$cl.module}>{$cl.title}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pd_price" class="col-sm-2 control-label"><span class="red">*</span> 商品价格：</label>
+                <div class="col-sm-3">
+                    <input disabled type="text" name="price" id="pd_price" class="form-control" data-check="['^[0-9]{1,}$','价格需为数字']" value="{$product.price}" placeholder="￥"/>
+                </div>
+                <label   class="col-sm-2 control-label"><span class="red">*</span> 商品类型：</label>
+                <div class="col-sm-3">
+                    <select disabled id="pd_category" name="module" class="form-control">
+                        <switch name="product.module" >
+                            <case value="0">
+                                <option value="0" selected>服饰</option>
+                                <option value="1">配件</option>
+                                <option value="2">家纺</option></case>
+                            <case value="1">
+                                <option value="0" >服饰</option>
+                                <option value="1" selected>配件</option>
+                                <option value="2">家纺</option>
+                            </case>
+                            <default />
+                            <option value="0">服饰</option>
+                            <option value="1">配件</option>
+                            <option value="2" selected>家纺</option>
+                        </switch>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pd_hot" class="col-sm-2 control-label"><span class="red">*</span> 热门类型：</label>
+                <div class="col-sm-3">
+                    <input disabled value="{$product.hot}" type="text" class="form-control" name="hot" id="pd_hot" placeholder="0" data-check="['^[0-1]{1}$','热门需为0或1']" value="0" /> <small>热门类型0为普通，1为栏目推荐 </small>
+                </div>
+                <label for="pd_status" class="col-sm-2 control-label"><span class="red">*</span> 状态：</label>
+                <div class="col-sm-3">
+                    <select disabled  class="form-control" name="status" id="pd_status">
+                        <if condition="$product.status eq 0">
+                            <option value="0" selected="selected">下架</option>
+                            <option value="1">上架</option>
+                            <else />
+                            <option value="0" >下架</option>
+                            <option value="1" selected="selected">上架</option>
+                        </if>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <!--其它属性-->
+        <div class="tab-pane fade in" id="othertab">
+            <!--品牌-->
+            <div class="form-group">
+                <label   class="col-sm-2 control-label"><span class="red">*</span> 品牌</label>
+                <div class="col-sm-5">
+                    <select disabled class="form-control" name="brand">
+                        <volist name="brandList" id="bl">
+                            <if condition="$bl.id eq $product.brand">
+                                <option selected="selected" value="{$bl.id}">{$bl.title}</option>
+                                <else />
+                                <option value="{$bl.id}">{$bl.title}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+            <!--case0 服饰-->
+            <div id="ot_fushi" style="display: block" class="ot_tab ">
+                <div class="form-group">
+                    <label    class="col-sm-2 control-label">尺码</label>
+                    <div class="col-sm-5" data-dom="{$product.size}">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">颜色</label>
+                    <volist name="colorDesc0" id="cdesc">
+                        <div data-id="{$cdesc.id}" class="col-sm-4 modImg clear col-sm-offset-2">
+                            <img src="{$cdesc.url}" class="form-control imgDesc_img input_img" />
+                            <input disabled class="form-control img_desc" type="text" value="{$cdesc.title}"  placeholder="描述" />
+                        </div>
+                    </volist>
+
+                </div>
+            </div>
+            <!--case1 配件-->
+            <div id="ot_peijian" style="display: none"  class="ot_tab  ">
+                <div class="form-group">
+                    <label   class="col-sm-2 control-label">分类</label>
+                    <div data-dom="{$product.category}"  class="col-sm-8">
+                    </div>
+                </div>
+            </div>
+            <!--case2 家纺-->
+            <div id="ot_jiafang" style="display: none"  class="ot_tab  ">
+                <div class="form-group">
+                    <label   class="col-sm-2 control-label">尺寸</label>
+                    <div data-dom="{$product.size}" class="col-sm-5">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">颜色</label>
+                    <volist name="colorDesc2" id="cdesc">
+                        <div data-id="{$cdesc.id}" class="col-sm-4 modImg clear col-sm-offset-2">
+                            <img src="{$cdesc.url}" class="form-control imgDesc_img input_img" />
+                            <input class="form-control img_desc" type="text" value="{$cdesc.title}"  placeholder="描述" />
+                        </div>
+                    </volist>
+
+                </div>
+            </div>
+            <!--自动添加商品的属性
+            <volist name="propertyList" id="pl">
+                <div class="form-group">
+                    <label for="pl_{$pl.id}" class="col-sm-2 control-label">{$pl.title}：</label>
+                    <div class="col-sm-9">
+                        <input  type="text" name="{$pl.name}" id="pl_{$pl.id}" placeholder="" value=" " />
+                    </div>
+                </div>
+            </volist>
+            -->
+
+        </div>
+
+        <!--商品图上传-->
+        <div class="tab-pane fade in" id="phototab">
+            <div class="form-group">
+                <label for="pd_hot" class="col-sm-2 control-label">商品图：</label>
+                <volist name="imgDesc" id="idesc">
+                    <div data-id="{$idesc.id}" class="col-sm-4 modImg clear col-sm-offset-2">
+                        <img src="{$idesc.url}" class="form-control imgDesc_img input_img" />
+                        <input class="form-control img_desc" type="text" value="{$idesc.title}"  placeholder="描述"   />
+                    </div>
+                </volist>
+
+            </div>
+        </div>
+
+        <!--商品详情-->
+        <div class="tab-pane fade " id="detailtab">
+
+            {$product.desc}
+
+        </div>
+
+        <a  id='save_btn' class="margin-top clear pull-left btn btn-primary  col-md-offset-5"  >保存</a>
+
+    </div>
+</form>
+</div>
+
+
+</body>
+
+<include file="Footer/footer" />
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    seajs.config({
+        base: "__APP__/Common/js/",
+    });
+    seajs.use('modProduct',function(ModProduct){
+        var product = new ModProduct;
+        product.init();
+
+    });
+    UE.getEditor('editor');//默认加载
+
+</script>

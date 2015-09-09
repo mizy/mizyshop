@@ -1,0 +1,288 @@
+<include file='Header/header' />
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置：<a href="__APP__">首页</a> ><a href="__APP__/Home/User">造型师</a>>造型师信息修改
+
+</div>
+<!------------ueditor---------------------->
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__APP__/Common/ueditor/lang/zh-cn/zh-cn.js"></script>
+<div class="container list_can ">
+    <!--左边-->
+    <include file='DesignerInfo/left' />
+
+    <script>
+        $(document).ready(function(){
+            $('#modinfo').addClass('active');
+        })
+    </script>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+        <ul class="nav nav-tabs tab" role="tablist">
+            <li class="active"><a href="#basetab" role="tab" data-toggle="tab">基本属性</a> </li>
+            <li ><a href="#imgtab" role="tab" data-toggle="tab">描述图片</a> </li>
+            <li  ><a href="#detailtab" role="tab" data-toggle="tab">详细描述</a> </li>
+        </ul>
+        <form role="form" class="col-md-11 form-horizontal" action="/Home/DesignerInfo/modInfoForm" method="post" id="modInfoForm" >
+
+            <div class="tab-content margin-top row">
+                 <!--基础属性-->
+                <div class="tab-pane fade  active in" id="basetab">
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 造型师名</label>
+                        <div class="col-sm-4">
+                            <input type="text" value="{$designer.name}" class="form-control" name="name" id="title" data-check="['^[\\S]*$','造型师名必填']" placeholder="">
+                        </div>
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 电话</label>
+                        <div class="col-sm-4">
+                            <input type="text" value="{$designer.phone}" class="form-control" name="phone" id="title" data-check="['^[0-9]{7,13}$','电话必填']" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 身份证号码</label>
+                        <div class="col-sm-4">
+                            <input type="text" value="{$designer.idCard}" class="form-control" name="idCard" id="title" data-check="['^[\\S]*$','身份证号码']" placeholder="">
+                        </div>
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 状态</label>
+                        <div class="col-sm-4">
+                            <select name="status" class="form-control">
+                                <if condition="$designer['status'] eq 0">
+                                    <option value="0" selected="selected">下线</option>
+                                    <option value="1">上线</option>
+                                    <else />
+                                    <option value="0" >下线</option>
+                                    <option value="1" selected="selected">上线</option>
+                                </if>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 资质/证书</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" name="zizhi" >{$designer.idCard}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 作品/经历</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control"  name="zuoping" >{$designer.zuoping}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 地址</label>
+                        <div class="col-sm-8">
+                            <input type="text" value="{$designer.address}" class="form-control" name="address" id="title" data-check="['^[\\S]*$','地址必填']" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 每小时价格￥</label>
+                        <div class="col-sm-6">
+                            <input type="text" value="{$designer.price}" class="form-control" name="price" id="title" data-check="['^[0-9]*$','价格必填']" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 账户id</label>
+                        <div class="col-sm-4">
+                            <input type="text" value="{$designer.user}" class="form-control" name="user" id="title" data-check="['^[\\S]*$','帐号必填']" >
+                        </div>
+                        <label for="title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 审核状态</label>
+                        <div class="col-sm-4">
+                            <select name="apply_status" class="form-control">
+                                <if condition="$designer['apply_status'] eq 0">
+                                    <option value="0" selected="selected">审核中</option>
+                                    <option value="1">审核通过</option>
+                                    <else />
+                                    <option value="0" >审核中</option>
+                                    <option value="1" selected="selected">审核通过</option>
+                                </if>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="text-info  col-sm-2 control-label"><span class="red">*</span> 添加服务</label>
+                        <div class="col-sm-4" >
+                            <div class=" " data-dom="{$designer.fuwu}">
+
+                                <a class="add_size_btn">继续添加</a>
+                            </div>
+                        </div>
+                        <style>
+                            [data-dom] input{
+                                margin:5px 0;
+                            }
+
+                        </style>
+                    </div>
+
+
+                </div>
+
+
+                <!--描述图片-->
+                <div class="tab-pane fade " id="imgtab">
+
+                    <div class="form-group">
+                        <label    class="text-info  col-sm-2 control-label"><span class="red">*</span>描述图片</label>
+                        <volist name="designer['img']" id="di">
+                            <div class="col-sm-offset-2 col-sm-10 modImg" data-id="{$di.id}">
+                                <img alt="{$di.title}" src="{$di.url}" class="input_img">
+                                <input type="file" class="form-control file" name="hotImg">
+                                <input type="hidden" class="imgValue" value="{$di.url}" name="hotImg" >
+                                <input type="text" placeholder="描述" value="{$di.title}" class="form-control hotImgDesc" >
+                                <a class="mod_del_btn">删除</a>
+
+                            </div>
+                        </volist>
+                        <a id="add_img" class="col-sm-10  clear col-sm-offset-2">继续添加</a>
+
+                    </div>
+                </div>
+
+
+                <!--商品详情-->
+                <div class="tab-pane fade " id="detailtab">
+
+                    <script id="editor" type="text/plain" class="clear pull-left col-md-11  " style="height:400px;">{$designer.desc}</script>
+
+                </div>
+
+
+                <a  id="add_btn" class="col-md-4 col-md-offset-4 btn btn-primary">保存</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+        UE.getEditor('editor');//默认加载
+
+        //添加服务函数
+        var dom,size, x,html;
+        $('[data-dom]').each(function(index,obj){
+            html = '';
+            dom = $(obj);
+            size = dom.attr('data-dom');
+            size = size.split('_');
+            for( x in size){
+                html +='<input class="form-control size_input" type="text"  value="'+size[x]+'" />';
+            }
+            $(obj).prepend(html);
+        })
+        $(document).on('click','a.add_size_btn',function(){
+            $(this).before('<input class="form-control size_input" type="text"  placeholder="" value="" />');
+        });
+
+        //添加图片函数
+        $('#add_img').click(function(){
+            $(this).before('<div class="col-sm-10 hotImg clear col-sm-offset-2">'
+                    +                   '<input  type="file" class="form-control file" name="hotImg">'
+                    +                    '<input type="hidden" value="" class="imgValue" name="hotImgValue" >'
+                    +                     '<input type="text" placeholder="描述" class="form-control hotImgDesc" >'
+                    +                    '<a class="del_btn">删除</a>'
+                    +               '</div>')
+        });
+
+
+        //del_btn
+        $('.del_btn').click(function(){
+            $(this).parent().remove();
+        });
+        $('.mod_del_btn').click(function(){
+            $(this).parent().addClass('hide');
+        });
+
+        //点击上传
+        $(document).on('change','input.file',function(){
+            var _self = this;
+            $('#add_img').text('继续添加：上传中。。。');
+            $('#modInfoForm').ajaxSubmit({
+                url:'/Admin/Class/ajaxImgUpload',
+                data:{name:'hotImg'},
+                dataType:'json',
+                success:function(data){
+                    if(data.status == 'success'){
+                        var img = $(_self).parent().find('.input_img');
+                        if(img.length<1){
+                            $(_self).before('<img src="'+data.url+'" class="input_img" />')
+                        }else{
+                            img[0].src = data.url;
+                        }
+                        $(_self).parent().find('.imgValue').val(data.url);
+                        $('#add_img').text('继续添加 ');
+                    }else{
+                        alert('wrong!'+data);
+                    }
+                }
+            })
+        });
+
+        //点击提交
+        $("#add_btn").click(function(){
+            var data = [];//图片数据
+            var modImg=[];
+            var checkForm = new CheckForm('#modInfoForm');
+            if(checkForm.getResult()){
+                //图片item
+                $('.hotImg').each(function(index,obj){
+                    var dom = $(obj);
+                    if(dom.find('.imgValue').val() != ''){
+                        data[index] = {};
+                        data[index].url = dom.find('.imgValue').val();
+                        data[index].title = dom.find('.hotImgDesc').val();
+                    }
+                });
+                data = JSON.stringify(data);
+                //修改图片item
+                $('.modImg').each(function(index,obj){
+                    var dom = $(obj);
+                    if(dom.find('.imgValue').val() != ''){
+                        modImg[index] = {};
+                        modImg[index].id = dom.attr('data-id');
+                        modImg[index].url = dom.find('.imgValue').val();
+                        modImg[index].title = dom.find('.hotImgDesc').val();
+                        if(dom.hasClass('hid')){
+                            modImg[index].delete = 'true';
+                        }
+                    }
+                });
+                modImg = JSON.stringify(modImg);
+                //服务item
+                var fuwuStr='';
+                $('.size_input').each(function(index,obj){
+                    var dom = $(obj);
+                    if(index==0){
+                        fuwuStr = dom.val();
+                    }else{
+                        fuwuStr +='_'+ dom.val();
+                    }
+
+                });
+
+                $('#modInfoForm').ajaxSubmit({
+                    data:{imgData:data,fuwuStr:fuwuStr,modImgData:modImg},
+                    success:function(data){
+                        if(data=="success"){
+                            $('#add_btn').text('保存成功，即将返回');
+                            setTimeout(function(){
+                                window.location.href =  window.location.href ;
+                            },1000)
+                        }else{
+                            alert("保存失败:"+data)
+                        }
+
+                    }
+                })
+            }
+        });
+
+    });
+
+</script>
+
+<include file='Footer/footer' />

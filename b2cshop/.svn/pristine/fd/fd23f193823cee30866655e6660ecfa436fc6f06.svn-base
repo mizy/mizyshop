@@ -1,0 +1,33 @@
+<nav class="navbar navbar-inverse " role="navigation">
+    <div class="navbar-header">
+        <div class="navbar-text">
+            <a href="/"><strong>模范行装</strong></a>
+        </div>
+    </div>
+
+    <ul class="nav navbar-nav">
+        <li id="Status"><a href="{:U('Status/index')}" >状态</a></li>
+        <li id="Class"><a href="{:U('Class/index')}">栏目</a></li>
+        <li id="Product"><a href="{:U('Product/index')}" >商品</a></li>
+       <!-- <li id="Module"><a href="{:U('Module/index')}" >类型</a></li> -->
+        <li id="Order"><a href="{:U('Order/index')}" >订单</a></li>
+        <if condition=" $user_type eq 1">
+            <li id="User"><a href="{:U('User/index')}" >用户</a></li>
+        </if>
+        <if condition=" $user_type eq 1">
+        	<li id="Setting"><a href="{:U('Setting/index')}">站点</a></li>
+        </if>
+        <li id="Designer"><a href="{:U('Designer/index')}" >造型师</a></li>
+
+    </ul>
+    <div class="col-md-2  pull-right">
+        <div class="btn-group" style="margin-top: 10px;">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                {$user_name} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{:U('Logout/index')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

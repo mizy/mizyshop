@@ -1,0 +1,87 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Designer|index">
+<include file="Sider/designer_left" />
+<div class="col-md-10 row">
+
+    <form style="margin-bottom: 10px" class="form-inline" role="form" action="./">
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" type="text" name="query" value="{$query}" placeholder="通过姓名查询">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn btn-info">搜索</button>
+            </div>
+        </div>
+    </form>
+
+    <div class=" panel panel-info">
+        <table class="table  table-bordered ">
+            <tr class=" panel-heading">
+                <th class="col-md-1">id</th>
+                <th class="col-md-1">姓名</th>
+                <th class="col-md-1">账户id</th>
+                <th class="col-md-2">地址</th>
+                <th class="col-md-2">电话</th>
+                <th class="col-md-1">浏览次数</th>
+                <th class="col-md-2">状态</th>
+                <th class="col-md-2">操作</th>
+            </tr>
+            <volist name="designerList" id="ul">
+                <tr data-id="{$ul.id}" >
+                    <td>{$ul.id}</td>
+                    <td>{$ul.name}</td>
+                    <td>{$ul.user}</td>
+                    <td>{$ul.address}</td>
+                    <td>{$ul.phone}</td>
+                    <td>{$ul.visit_times}</td>
+                    <td>
+                        <if condition="$ul.status eq 0">
+                            下线
+                            <else />
+                            上线
+                        </if>
+                    </td>
+                    <td>
+                        <a class="btn-link btn-danger" onclick="deleteNode(this)" href="#" ><button type="button" class="btn btn-xs btn-danger">删除</button></a>
+                        <a class="btn-link btn-warning" href="{:U('Designer/modDesigner')}?id={$ul.id}"><button type="button" class="btn btn-xs btn-info ">查看</button></a>
+                        <if condition="$ul.apply_status eq 0">
+                            <a class="btn-link btn-primary pass_btn" data-id="{$ul.id}"  class="pass_btn"><button type="button" class="btn  btn-xs btn-info ">审核通过</button></a>
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+        </table>
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <ul class="pagination">
+                {$showList}
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+        <script>
+            $('.pass_btn').click(function(){
+                var _self = this;
+                var id=$(_self).attr('data-id');
+                $.ajax({
+                   url: '/Admin/Designer/pass',
+                   type:'get',
+                    data:{id:id},
+                    success:function(data){
+                        if(data=='success'){
+                            $(_self).find('button').text('已通过');
+                            setTimeout(function(){
+                                $(_self).fadeOut(1000,function(){
+                                    $(_self).remove();
+                                });
+                            },1000)
+                         }
+                    }
+                })
+            })
+        </script>
+
+<include file="Footer/footer" />

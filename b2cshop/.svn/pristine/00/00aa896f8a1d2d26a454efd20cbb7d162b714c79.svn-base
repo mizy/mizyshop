@@ -1,0 +1,15 @@
+<div class="col-md-3 ">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span class="panel-heading">管理</span>
+        </div>
+
+        <div class="panel-body">
+            <ul class=" nav   nav-pills nav-stacked">
+                <li   id="index"  ><a href="{:U('Setting/index')}">网站管理</a></li>
+                <li   id="slider"  ><a href="{:U('Setting/slider')}">幻灯片管理</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>

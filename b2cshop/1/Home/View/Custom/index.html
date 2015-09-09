@@ -1,0 +1,108 @@
+<include file='Header/header' />
+<!------主页面------>
+<div class="container b1_brand " >
+     您当前的位置：<a href="__APP__">首页</a>
+    ><a href="__APP__/Home/Custom/index.html">私人造型服务</a>
+
+</div>
+<div class="container list_can ">
+    <!--左边-->
+    <div class="list_left col-md-2">
+        <div class="list_class">
+            <!--商品分类-->
+            <div class="list_left_can">
+                <div class="header">
+                    所有私人顾问
+                </div>
+                <div class="content">
+                    <div class="list_dropdown active"  >
+                        <span><a href="__APP__/Home/List/index.html?id={$ccl.id}">服务类型</a><i class="iconLeftTrim"></i></span>
+                        <ul class="padding0" data-dom="{$fuwuList.title}">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--右边-->
+    <div class="list_right col-md-10" style="border-top:2px solid">
+        <div class="itemNum" style="margin-top: 0;border-top:0">
+            共找到<span class="m_font">{$itemNum}</span>私人顾问
+        </div>
+        <div class="listOrder" data-value="{$orderType}">
+            <a href="__APP__/Home/List/index.html?id={$id}&brand={$brand}&orderType=" class="">综合排序</a>
+            <a class="sold_num" href="__APP__/Home/List/index.html?id={$id}&brand={$brand}&orderType=sold_num">服务次数</a>
+            <a class="visit_times" href="__APP__/Home/List/index.html?id={$id}&brand={$brand}&orderType=visit_times">人气</a>
+        </div>
+        <div class="itemCan margin-top row">
+            <volist name="itemList" id="iL">
+                <div class="item col-md-3">
+                    <div class="img">
+                        <a href="__APP__/Home/Custom/designer.html?id={$iL.id}" >
+                            <img src="{$iL['img']['url']}">
+                        </a>
+                        <div class="img_bar">
+                            <span class="incart"></span>
+                            <span class="weibo"></span>
+                            <span data-value="{$iL.id}" class="zan "></span>
+                        </div>
+                    </div>
+                    <div class="item_list_info">
+                        <a href="__APP__/Home/Custom/designer.html?id={$iL.id}" >
+                            <span class="item_title">{$iL.name}</span>
+                        </a>
+                        <div class="item_price">
+                            浏览数&nbsp;&nbsp;<span class="m_font">{$iL.visit_times}</span>
+                            <span class="item_zan">赞:{$iL.zan}</span>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+            <style>
+                .img{
+                    border: 1px solid #ccc
+                }
+                .item_list_info{
+                    border:1px solid #ccc;
+                    border-top:0;
+                    padding: 3px;
+                }
+            </style>
+        </div>
+        <div class="page">
+            <ul class="pagination">
+                {$showList}
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <script>
+
+            //添加服务函数
+            var dom,size, x,html;
+            $('[data-dom]').each(function(index,obj){
+                html = '';
+                dom = $(obj);
+                size = dom.attr('data-dom');
+                size = size.split('_');
+                for( x in size){
+                    html +='  <li><a href="__APP__/Home/Custom/?fuwu='+size[x]+'">'+size[x]+'</a></li>';
+                }
+                $(obj).prepend(html);
+            });
+
+            //hover效果
+            $(document).on('click','.iconLeftTrim',function(){
+                var grand = $(this).parent().parent();
+                if($(grand).hasClass('active')){
+                    $(grand).removeClass('active');
+                }else{
+                    $(grand).addClass('active');
+                }
+            })
+        </script>
+<include file='Footer/footer' />

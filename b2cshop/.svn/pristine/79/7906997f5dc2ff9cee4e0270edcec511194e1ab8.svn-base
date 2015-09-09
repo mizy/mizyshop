@@ -1,0 +1,50 @@
+<include file="Header/header" />
+
+<div class="body">
+    <div class="content">
+        <div class="type_href">
+            <span>当前位置</span>
+            <span><a href="__APP__/" >首页</a></span>
+            <span> > </span>
+            <span><a href="__APP__/Type/?id={$type['type_id']}">{$type['type_name']}</a></span>
+        </div>
+        <div class="job_name back_color0">
+            <span>{$job['job_name']}</span>
+        </div>
+        <div class="job_can back_color1">
+            <div class="span">
+               <span>岗位要求</span>
+            </div>
+            <div class="info">
+                {$job['job_request']}
+            </div>
+        </div>
+        <div class="job_can back_color2">
+            <div class="span">
+                <span>岗位职责</span>
+            </div>
+            <div class="info">
+                {$job['job_info']}
+            </div>
+        </div>
+        <div class="job_can back_color3">
+            <div class="span">
+                <span>岗位远景</span>
+            </div>
+            <div class="info">
+                {$job['job_will']}
+            </div>
+        </div>
+        <div class="job_can back_color4">
+            <div class="span">
+                <span>岗位薪资</span>
+            </div>
+            <div class="info">
+                         首年￥{$job['job_salary']}
+
+            </div>
+        </div>
+    </div>
+</div> 
+<script src="__APP__/js/job.js"></script>
+<include file="Footer/footer" />

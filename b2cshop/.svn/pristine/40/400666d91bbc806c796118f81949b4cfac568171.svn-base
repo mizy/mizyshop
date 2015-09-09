@@ -1,0 +1,36 @@
+<!--导航-->
+<div style="min-width: 1200px" class="can100 margin-top clear" role="navigation">
+    <div class="container b1_nav">
+        <ul >
+            <volist name="classList" id="cll">
+                <li data-id="{$cll.id}">
+                    <a href="{:U('List/index')}?id={$cll.id}">{$cll.title}</a>
+                    <ul class="b1_dropdown">
+                        <volist name="cll.child" id="ccd">
+                            <li>
+                                <a href="{:U('List/index')}?id={$ccd.id}">{$ccd.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </li>
+            </volist>
+        </ul>
+        <a href="__APP__/Home/Custom" class="b1_b_btn pull-right" style="margin-top: -6px ;">+私人服务</a>
+   </div>
+</div>
+        <script>
+            (function(){
+                $('.b1_nav li[data-id]').mouseenter(function(){
+                    $(this).addClass('active');
+                    $(this).addClass('in');
+                })
+                $('.b1_nav li[data-id]').mouseleave(function(){
+                    $(this).removeClass('in');
+                    var _self = this;
+                    setTimeout(function(){
+                        if(!$(_self).hasClass('in'))
+                        $(_self).removeClass('active');
+                    },100);
+                })
+            })();
+        </script>

@@ -1,0 +1,168 @@
+<include file='Header/header' />
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<!------主页面------>
+<div class="container b1_brand " >
+    您当前的位置： 您当前的位置：<a href="__APP__">首页</a> >搜索结果
+</volist>
+</div>
+
+<div class="container list_can ">
+    <!--左边-->
+    <div class="list_left col-md-2">
+        <div class="list_class">
+
+            <!--浏览历史-->
+            <div class="list_left_can">
+                <div class="header">
+                    浏览历史
+                </div>
+                <div class="content">
+                    <ul class="historyUl">
+                        <volist name="historyItem" id="hi"  >
+                            <li>
+                                <img src="{$hi.url}">
+                                <a href="__APP__/Home/Item/index.html?id={$hi.id}">{$hi.title}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右边-->
+    <div class="list-right col-md-10" >
+
+        <div class="itemNum">
+            共找到<span class="m_font">{$itemNum}</span>件商品
+        </div>
+
+        <div class="itemCan margin-top row">
+            <volist name="itemList" id="iL">
+                <div class="item col-md-3">
+                    <div class="img">
+                        <a href="__APP__/Home/Item/index.html?id={$iL.id}" >
+                            <img src="{$iL['img']['url']}">
+                        </a>
+                        <div class="img_bar list_img_bar ">
+                            <a style="float: right" href="_APP__/Home/Item/index.html?id={$iL.id}" ><span class="incart"></span></a>
+                            <a style="float: right"  target="_blank" href="http://service.weibo.com/share/share.php?url=http://b1queen.com/Home/Item/index.html?id={$iL.id}&appkey=285243100&title=//@模范行装&ralateUid= &language=zh_cn" ><span class="weibo"></span></a>
+                            <span data-value="{$iL.id}" class="zan "></span>
+<!--
+                            <a><wb:share-button addition="number" type="button"></wb:share-button></a>
+-->
+                        </div>
+                    </div>
+                    <div class="item_list_info">
+                        <span class="item_title">{$iL.title}</span>
+                        <div class="item_price">
+                            RMB&nbsp;&nbsp;<span class="m_font">{$iL.price}</span>
+                            <span class="item_zan">赞:{$iL.zan}</span>
+                        </div>
+                    </div>
+                    <div class="old_price">
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="page">
+            <ul class="pagination">
+                {$showList}
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="__APP__/Common/js/lib/sea.js"></script>
+<script>
+
+    seajs.use('__APP__/Common/js/tipbox',function(TipBox){
+        //orderType
+        var orderType = $('.listOrder').attr('data-value');
+        if(orderType==''){
+            $('.listOrder a:first').addClass('current');
+        }else{
+            $('.listOrder').find('.'+orderType).addClass('current');
+        }
+
+        //销售榜
+        function cutstr(str,len)
+        {
+            var str_length = 0;
+            var str_len = 0;
+            str_cut = new String();
+            str_len = str.length;
+            for(var i = 0;i<str_len;i++)
+            {
+                a = str.charAt(i);
+                str_length++;
+                if(escape(a).length > 4)
+                {
+                    //中文字符的长度经编码之后大于4
+                    str_length++;
+                }
+                str_cut = str_cut.concat(a);
+                if(str_length>=len)
+                {
+                    str_cut = str_cut.concat("...");
+                    return str_cut;
+                }
+            }
+            //如果给定字符串小于指定长度，则返回源字符串；
+            if(str_length<len){
+                return  str;
+            }
+        }
+        $('div.soldlist .tittle a').each(function(index,obj){
+            if($(obj).width()>140){
+                var text = $(obj).text();
+                $(obj).text(cutstr(text,16));
+            }
+        });
+        $('.historyUl li  a').each(function(index,obj){
+            if($(obj).width()>140){
+                var text = $(obj).text();
+                $(obj).text(cutstr(text,10));
+            }
+        })
+
+        //hover效果
+        $(document).on('click','.iconLeftTrim',function(){
+            var grand = $(this).parent().parent();
+            if($(grand).hasClass('active')){
+                $(grand).removeClass('active');
+            }else{
+                $(grand).addClass('active');
+            }
+        })
+
+        $(document).on('mouseenter','.img' ,function(){
+            $(this).parent().addClass('active');
+            $(this).find('.img_bar').slideDown();
+        });
+        $(document).on('mouseleave','.img' ,function(){
+            $(this).parent().removeClass('active');
+            $(this).find('.img_bar').slideUp();
+        })
+
+        //点赞
+        $('.zan').click(function(){
+            var _self = this;
+            var tipbox = new TipBox({
+                obj: $(this),
+                str: "+1",
+                endSize:'26',
+                interval:900,
+                color:"#e6007e",
+                callback: function() {
+                    $.ajax({
+                        url:"__APP__/Home/List/addZan.html?id="+$(_self).attr('data-value')+"&match=0"
+                    })
+                }
+            })
+        })
+    });
+
+
+</script>
+
+
+<include file='Footer/footer' />

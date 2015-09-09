@@ -1,0 +1,85 @@
+<include file="Header/header" />
+<include file="Header/nav" />
+<body data-id="Module|index">
+<include file="Sider/module_left" />
+<div class="col-md-10 row">
+    <div class=" panel panel-info padding-0">
+        <div class="panel-heading">
+            <div class="panel-title">修改{$property.title}属性</div>
+        </div>
+        <div class="panel-body">
+            <form role="form" class="col-md-10 col-md-offset-1 form-horizontal" action="./modPropertyForm" method="post" id="adPropertyForm" >
+
+                <input type="hidden" name="id" value="{$property.id}">
+                <div class="form-group">
+                    <label for="md_title"  class="text-info col-sm-2 control-label"><span class="red">*</span> 属性名</label>
+                    <div class="col-sm-10">
+                        <input type="text" value="{$property.title}" class="form-control" name="title" id="md_title" data-check="['^[\\S]{0,}$','类型不能为空']" placeholder="任意，不得为空">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name"  class="text-info col-sm-2 control-label"><span class="red">*</span> 英文简称</label>
+                    <div class="col-sm-10">
+                        <input type="text"  value={$property.name} class="form-control" name="name" id="name" data-check="['^[a-zA-Z]{0,20}$','简称不能为空']" placeholder="字符串，不能为空">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pt_hot"  class="text-info col-sm-2 control-label"><span class="red">*</span> 筛选</label>
+                    <div class="col-sm-10">
+                        <input type="text" value="{$property.hot}" class="form-control" name="hot" id="pt_hot" data-check="['^[0-1]{1}$','筛选只能为0或1']" placeholder="1代表筛选属性，0代表非筛选属性">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pt_class"  class="text-info col-sm-2 control-label"><span class="red">*</span>分类属性</label>
+                    <div class="col-sm-10">
+                        <input type="text" value="{$property.class}" class="form-control" name="class" id="pt_class" data-check="['^[0-1]{1}$','只能为0或1']" placeholder="1代表分类属性，0代表非分类属性">
+                        <small>若为分类属性，则添加相关商品时需要添加对应分类，例如：尺码</small>
+                    </div>
+                </div>
+
+                <a  id="add_btn" class="col-md-4 col-md-offset-4 btn btn-primary">添加</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="__APP__/Common/js/lib/jquery.form.min.js"></script>
+<script>
+    seajs.use('__APP__/Common/js/checkForm.js',function(CheckForm){
+        $("#add_btn").click(function(){
+            //去除错误提示
+            $('.has-error').each(function(){
+                $(this).removeClass('.has-error');
+                $(this).find('.help-block').remove();
+            });
+
+            var checkForm = new CheckForm('#modPropertyForm');
+            if(checkForm.getResult()){
+                $('#modPropertyForm').ajaxSubmit({
+                    success:function(data){
+                        if(data=="success"){
+                            $('#add_btn').text('修改成功,即将返回');
+                            setTimeout(function(){
+                               location.href="__APP__/Admin/Module/getProperty.html?id={$property.father}"
+                            },1500)
+                        }else{
+                            alert('添加失败！')
+                        }
+                    }
+                })
+            }
+        });
+
+        //去除提升
+        $("input").click(function(){
+            $(this).parents('.has-error').removeClass('has-error');
+            $(this).parent().find('.help-block').remove();
+        })
+
+    });
+
+</script>
+<include file="Footer/footer" />
